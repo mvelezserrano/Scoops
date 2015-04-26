@@ -6,6 +6,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MyScoopViewController">
             <connections>
+                <outlet property="publishLabel" destination="le9-xx-COu" id="IWS-MC-DFa"/>
+                <outlet property="publishSwitch" destination="kZb-h4-RKx" id="SjR-Ox-GAt"/>
                 <outlet property="textView" destination="gEi-s1-akN" id="8c3-6s-IOr"/>
                 <outlet property="titleView" destination="Ekp-HQ-hkN" id="PdB-W9-8Aa"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>

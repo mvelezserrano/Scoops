@@ -29,6 +29,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    if (self.model.published) {
+        self.publishLabel.hidden = YES;
+        self.publishSwitch.hidden = YES;
+    }
+    
     [self syncViewWithModel];
 }
 

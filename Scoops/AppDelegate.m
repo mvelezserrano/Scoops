@@ -9,6 +9,8 @@
 #import "AppDelegate.h"
 #import "Scoop.h"
 #import "MyScoopViewController.h"
+#import "MyScoopsTableViewController.h"
+#import "MyScoopsViewController.h"
 #import "NewScoopViewController.h"
 
 @interface AppDelegate ()
@@ -22,17 +24,16 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
-    Scoop *scoop = [[Scoop alloc] initWithTitle:@"Título de prueba"
-                                       andPhoto:nil
-                                          aText:@"Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."
-                                       anAuthor:@"Mixi"
-                                          aCoor:CLLocationCoordinate2DMake(0, 0)];
     
-    MyScoopViewController *myScoopVC = [[MyScoopViewController alloc] initWithScoop:scoop];
-    NewScoopViewController *newScoopVC = [[NewScoopViewController alloc] init];
+    
+    //MyScoopViewController *myScoopVC = [[MyScoopViewController alloc] initWithScoop:scoop];
+    //NewScoopViewController *newScoopVC = [[NewScoopViewController alloc] init];
+    //MyScoopsTableViewController *tVC = [[MyScoopsTableViewController alloc] initWithStyle:UITableViewStylePlain];
+    MyScoopsViewController *myScoopsVC = [[MyScoopsViewController alloc] initWithScoops:[self populateLocalScoops]];
+    UINavigationController *myScoopsNavC = [[UINavigationController alloc] initWithRootViewController:myScoopsVC];
     
     UITabBarController *tb = [[UITabBarController alloc] init];
-    [tb setViewControllers:@[myScoopVC, newScoopVC]];
+    [tb setViewControllers:@[/*myScoopVC, */myScoopsNavC]];
     
     self.window.rootViewController = tb;
     
@@ -63,6 +64,47 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+
+- (NSArray *) populateLocalScoops {
+    
+    Scoop *scoop1 = [[Scoop alloc] initWithTitle:@"Título 1"
+                                       andPhoto:nil
+                                          aText:@"Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. Lorem ipsum dolor sit er elit lamet."
+                                       anAuthor:@"Mixi"
+                                          aCoor:CLLocationCoordinate2DMake(0, 0)
+                                       published: YES];
+    
+    Scoop *scoop2 = [[Scoop alloc] initWithTitle:@"Título 2"
+                                        andPhoto:nil
+                                           aText:@"Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. Lorem ipsum dolor sit er elit lamet."
+                                        anAuthor:@"Mixi"
+                                           aCoor:CLLocationCoordinate2DMake(0, 0)
+                                       published: YES];
+    
+    Scoop *scoop3 = [[Scoop alloc] initWithTitle:@"Título 3"
+                                        andPhoto:nil
+                                           aText:@"Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. Lorem ipsum dolor sit er elit lamet."
+                                        anAuthor:@"Mixi"
+                                           aCoor:CLLocationCoordinate2DMake(0, 0)
+                                       published: YES];
+    
+    Scoop *scoop4 = [[Scoop alloc] initWithTitle:@"Título 4"
+                                        andPhoto:nil
+                                           aText:@"Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. Lorem ipsum dolor sit er elit lamet."
+                                        anAuthor:@"Mixi"
+                                           aCoor:CLLocationCoordinate2DMake(0, 0)
+                                       published: NO];
+    
+    Scoop *scoop5 = [[Scoop alloc] initWithTitle:@"Título 5"
+                                        andPhoto:nil
+                                           aText:@"Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. Lorem ipsum dolor sit er elit lamet."
+                                        anAuthor:@"Mixi"
+                                           aCoor:CLLocationCoordinate2DMake(0, 0)
+                                       published: NO];
+    
+    return @[scoop1, scoop2, scoop3, scoop4, scoop5];
 }
 
 @end

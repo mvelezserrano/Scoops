@@ -17,6 +17,7 @@
 @property (nonatomic) CLLocationCoordinate2D coors;
 @property (nonatomic, strong) NSData *image;
 @property (nonatomic, strong) NSDate *dateCreated;
+@property (nonatomic) BOOL published;
 
 
 @end
@@ -34,6 +35,23 @@
         _coors = coors;
         _image = img;
         _dateCreated = [NSDate date];
+        _published = NO;
+    }
+    
+    return self;
+    
+}
+
+-(id)initWithTitle:(NSString *)title andPhoto:(NSData *)img aText:(NSString *)text anAuthor:(NSString *)author aCoor:(CLLocationCoordinate2D)coors published: (BOOL) isPublished {
+    
+    if (self = [super init]) {
+        _title = title;
+        _text = text;
+        _author = author;
+        _coors = coors;
+        _image = img;
+        _dateCreated = [NSDate date];
+        _published = isPublished;
     }
     
     return self;

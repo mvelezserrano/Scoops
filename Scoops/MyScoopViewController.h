@@ -13,6 +13,8 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *titleView;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
+@property (weak, nonatomic) IBOutlet UILabel *publishLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *publishSwitch;
 
 @property (strong, nonatomic) Scoop *model;
 
