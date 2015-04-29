@@ -21,7 +21,6 @@
 @property (strong, nonatomic) NSMutableArray *scoopsPublished;
 @property (strong, nonatomic) NSMutableArray *scoopsNotPublished;
 @property (nonatomic) BOOL showPublished;
-//@property (weak, nonatomic) IBOutlet UIImageView *picProfile;
 @property (weak, nonatomic) IBOutlet UIImageView *picProfile;
 @property (strong, nonatomic) NSURL *profilePicture;
 
@@ -43,6 +42,7 @@
             }
         }
         _showPublished = YES;
+        self.title = @"My Scoops";
     }
     
     return self;

@@ -15,6 +15,15 @@
 
 @implementation NewScoopViewController
 
+- (id) init {
+    
+    if (self = [super init]) {
+        self.title = @"New Scoop";
+    }
+    
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -22,10 +31,21 @@
     self.scoopTextView.delegate = self;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void) viewWillAppear:(BOOL)animated {
+    
+    [super viewWillAppear:animated];
+    // Alta en notificaciones del teclado
+    [self setupKeyboardNotifications];
 }
+
+- (void) viewWillDisappear:(BOOL)animated {
+    
+    [super viewWillDisappear:animated];
+    
+    // Baja en notificaciones
+    [self tearDownKeyboardNotifications];
+}
+
 
 - (IBAction)sendScoop:(id)sender {
     
@@ -53,8 +73,82 @@
 }
 
 
+- (IBAction)hideKeyboard:(id)sender {
+    
+    [self.view endEditing:YES];
+}
+
+- (void) setupKeyboardNotifications {
+    
+    // Alta en notificaciones para el teclado
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    
+    [nc addObserver:self
+           selector:@selector(notifiyThatKeyboardWillAppear:)
+               name:UIKeyboardWillShowNotification
+             object:nil];
+    
+    [nc addObserver:self
+           selector:@selector(notifyThatKeyboardWillDisappear:)
+               name:UIKeyboardWillHideNotification
+             object:nil];
+}
 
 
+- (void) tearDownKeyboardNotifications {
+    
+    // Damos de baja las notificaciones
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    
+    [nc removeObserver:self];
+}
+
+// UIKeyboardWillShowNotification
+
+- (void) notifiyThatKeyboardWillAppear: (NSNotification *) n {
+    
+    // Sacar la duración de la animación del teclado
+    double duration = [[n.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    
+    // Sacar el tamaño (bounds) del teclado del objeto
+    // userInfo que viene en la notificación.
+    NSValue *wrappedFrame = [n.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGRect kbdFrame = [wrappedFrame CGRectValue];
+    
+    // Calcular los nuevos bounds de self.textView
+    CGRect currentTextFrame = self.scoopTextView.frame;
+    CGRect newRect = CGRectMake(currentTextFrame.origin.x,
+                                currentTextFrame.origin.y,
+                                currentTextFrame.size.width,
+                                currentTextFrame.size.height -
+                                kbdFrame.size.height+150);
+    
+    
+    
+    // Hacerlo en una animación que coincida con el teclado.
+    [UIView animateWithDuration:duration
+                     animations:^{
+                         self.scoopTextView.frame = newRect;
+                     }];
+    
+}
+
+
+// UIKeyboardWillHideNotification
+
+- (void) notifyThatKeyboardWillDisappear: (NSNotification *) n {
+    
+    // Sacar la duración de la animación del teclado
+    double duration = [[n.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    
+    // Devolver a self.textView su bounds original
+    // mediante una animación que coincide con la
+    // del teclado.
+    [UIView animateWithDuration:duration
+                     animations:^{
+                         self.scoopTextView.frame = CGRectMake(25, 127, 325, 375);
+                     }];
+}
 
 
 

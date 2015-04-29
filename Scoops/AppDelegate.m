@@ -27,13 +27,13 @@
     
     
     //MyScoopViewController *myScoopVC = [[MyScoopViewController alloc] initWithScoop:scoop];
-    //NewScoopViewController *newScoopVC = [[NewScoopViewController alloc] init];
+    NewScoopViewController *newScoopVC = [[NewScoopViewController alloc] init];
     //MyScoopsTableViewController *tVC = [[MyScoopsTableViewController alloc] initWithStyle:UITableViewStylePlain];
     MyScoopsViewController *myScoopsVC = [[MyScoopsViewController alloc] initWithScoops:[self populateLocalScoops]];
     UINavigationController *myScoopsNavC = [[UINavigationController alloc] initWithRootViewController:myScoopsVC];
     
     UITabBarController *tb = [[UITabBarController alloc] init];
-    [tb setViewControllers:@[/*myScoopVC, */myScoopsNavC]];
+    [tb setViewControllers:@[myScoopsNavC, newScoopVC]];
     
     self.window.rootViewController = tb;
     

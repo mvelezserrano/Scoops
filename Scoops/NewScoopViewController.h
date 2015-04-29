@@ -9,7 +9,7 @@
 @import UIKit;
 @class Scoop;
 
-@interface NewScoopViewController : UIViewController <UITextViewDelegate>
+@interface NewScoopViewController : UIViewController <UITextViewDelegate, UITextFieldDelegate>
 
 
 @property (weak, nonatomic) IBOutlet UITextField *scoopTitleView;
