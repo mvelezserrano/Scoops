@@ -35,7 +35,7 @@
         _scoopsPublished = [[NSMutableArray alloc] init];
         _scoopsNotPublished = [[NSMutableArray alloc] init];
         for (Scoop *scoop in arrayOfScoops) {
-            if (scoop.published) {
+            if (scoop.status == PUBLISHED) {
                 [_scoopsPublished addObject:scoop];
             } else {
                 [_scoopsNotPublished addObject:scoop];

@@ -42,7 +42,7 @@
     
 }
 
--(id)initWithTitle:(NSString *)title andPhoto:(NSData *)img aText:(NSString *)text anAuthor:(NSString *)author aCoor:(CLLocationCoordinate2D)coors published: (BOOL) isPublished {
+-(id)initWithTitle:(NSString *)title andPhoto:(NSData *)img aText:(NSString *)text anAuthor:(NSString *)author aCoor:(CLLocationCoordinate2D)coors status: (int) aStatus {
     
     if (self = [super init]) {
         _title = title;
@@ -51,7 +51,7 @@
         _coors = coors;
         _image = img;
         _dateCreated = [NSDate date];
-        _published = isPublished;
+        _status = aStatus;
     }
     
     return self;

@@ -12,6 +12,7 @@
 #import "ScoopsTableViewController.h"
 #import "MyScoopsViewController.h"
 #import "NewScoopViewController.h"
+#import "sharedkeys.h"
 
 @interface AppDelegate ()
 
@@ -74,35 +75,35 @@
                                           aText:@"Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. Lorem ipsum dolor sit er elit lamet."
                                        anAuthor:@"Mixi"
                                           aCoor:CLLocationCoordinate2DMake(0, 0)
-                                       published: YES];
+                                       status: PUBLISHED];
     
     Scoop *scoop2 = [[Scoop alloc] initWithTitle:@"Título 2"
                                         andPhoto:nil
                                            aText:@"Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. Lorem ipsum dolor sit er elit lamet."
                                         anAuthor:@"Mixi"
                                            aCoor:CLLocationCoordinate2DMake(0, 0)
-                                       published: YES];
+                                       status: PUBLISHED];
     
     Scoop *scoop3 = [[Scoop alloc] initWithTitle:@"Título 3"
                                         andPhoto:nil
                                            aText:@"Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. Lorem ipsum dolor sit er elit lamet."
                                         anAuthor:@"Mixi"
                                            aCoor:CLLocationCoordinate2DMake(0, 0)
-                                       published: YES];
+                                       status: PUBLISHED];
     
     Scoop *scoop4 = [[Scoop alloc] initWithTitle:@"Título 4"
                                         andPhoto:nil
                                            aText:@"Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. Lorem ipsum dolor sit er elit lamet."
                                         anAuthor:@"Mixi"
                                            aCoor:CLLocationCoordinate2DMake(0, 0)
-                                       published: NO];
+                                       status: NOT_PUBLISHED];
     
     Scoop *scoop5 = [[Scoop alloc] initWithTitle:@"Título 5"
                                         andPhoto:nil
                                            aText:@"Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. Lorem ipsum dolor sit er elit lamet."
                                         anAuthor:@"Mixi"
                                            aCoor:CLLocationCoordinate2DMake(0, 0)
-                                       published: NO];
+                                       status: NOT_PUBLISHED];
     
     return @[scoop1, scoop2, scoop3, scoop4, scoop5];
 }

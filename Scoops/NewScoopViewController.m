@@ -6,10 +6,15 @@
 //  Copyright (c) 2015 Miguel Ángel Vélez Serrano. All rights reserved.
 //
 
+#import <WindowsAzureMobileServices/WindowsAzureMobileServices.h>
 #import "NewScoopViewController.h"
 #import "Scoop.h"
 
-@interface NewScoopViewController ()
+@interface NewScoopViewController () {
+    MSClient *client;
+    NSString *userFBId;
+    NSString *tokenFB;
+}
 
 @end
 
@@ -28,6 +33,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    [self loadUserAuthInfo];
     self.scoopTextView.delegate = self;
 }
 
@@ -48,6 +54,8 @@
 
 
 - (IBAction)sendScoop:(id)sender {
+    
+    // Crear el objeto Scoop (con el autor
     
     NSLog(@"Enviar la noticia");
 }
@@ -148,6 +156,24 @@
                      animations:^{
                          self.scoopTextView.frame = CGRectMake(25, 127, 325, 375);
                      }];
+}
+
+
+#pragma mark - Utils
+
+- (BOOL)loadUserAuthInfo{
+    
+    userFBId = [[NSUserDefaults standardUserDefaults]objectForKey:@"userID"];
+    tokenFB = [[NSUserDefaults standardUserDefaults]objectForKey:@"tokenFB"];
+    
+    if (userFBId) {
+        client.currentUser = [[MSUser alloc]initWithUserId:userFBId];
+        client.currentUser.mobileServiceAuthenticationToken = [[NSUserDefaults standardUserDefaults]objectForKey:@"tokenFB"];
+        
+        return TRUE;
+    }
+    
+    return FALSE;
 }
 
 

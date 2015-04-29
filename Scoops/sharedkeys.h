@@ -10,3 +10,7 @@
 
 #define AZUREMOBILESERVICE_ENDPOINT @"https://mavnewsolutionplatform.azure-mobile.net/"
 #define AZUREMOBILESERVICE_APPKEY @"JBQLDXuLvLGDzSnyVLspFvldSzTGaR75"
+
+#define NOT_PUBLISHED 0
+#define PENDING 1
+#define PUBLISHED 2

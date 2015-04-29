@@ -8,6 +8,7 @@
 
 #import "MyScoopViewController.h"
 #import "Scoop.h"
+#import "sharedkeys.h"
 
 @interface MyScoopViewController ()
 
@@ -29,7 +30,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    if (self.model.published) {
+    if (self.model.status == PUBLISHED) {
         self.publishLabel.hidden = YES;
         self.publishSwitch.hidden = YES;
     }

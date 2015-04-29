@@ -12,7 +12,7 @@
 @interface Scoop : NSObject
 
 - (id)initWithTitle:(NSString*)title andPhoto:(NSData *)img aText:(NSString*)text anAuthor:(NSString *)author aCoor:(CLLocationCoordinate2D) coors;
-- (id)initWithTitle:(NSString *)title andPhoto:(NSData *)img aText:(NSString *)text anAuthor:(NSString *)author aCoor:(CLLocationCoordinate2D)coors published: (BOOL) isPublished;
+- (id)initWithTitle:(NSString *)title andPhoto:(NSData *)img aText:(NSString *)text anAuthor:(NSString *)author aCoor:(CLLocationCoordinate2D)coors status: (int) aStatus;
 
 @property (readonly) NSString *title;
 @property (readonly) NSString *text;
@@ -20,7 +20,7 @@
 @property (readonly) CLLocationCoordinate2D coors;
 @property (readonly) NSData *image;
 @property (readonly) NSDate *dateCreated;
-@property (readonly) BOOL published;
+@property (readonly) int status;
 
 
 @end
