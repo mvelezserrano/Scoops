@@ -6,15 +6,24 @@
 //  Copyright (c) 2015 Miguel Ángel Vélez Serrano. All rights reserved.
 //
 
+#import <WindowsAzureMobileServices/WindowsAzureMobileServices.h>
+#import "sharedkeys.h"
 #import "MyScoopsViewController.h"
 #import "MyScoopViewController.h"
 #import "Scoop.h"
 
-@interface MyScoopsViewController ()
+@interface MyScoopsViewController () {
+    MSClient *client;
+    NSString *userFBId;
+    NSString *tokenFB;
+}
 
 @property (strong, nonatomic) NSMutableArray *scoopsPublished;
 @property (strong, nonatomic) NSMutableArray *scoopsNotPublished;
 @property (nonatomic) BOOL showPublished;
+//@property (weak, nonatomic) IBOutlet UIImageView *picProfile;
+@property (weak, nonatomic) IBOutlet UIImageView *picProfile;
+@property (strong, nonatomic) NSURL *profilePicture;
 
 @end
 
@@ -42,7 +51,21 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    self.navigationItem.title = @"My Scoops";
+    
+    // llamamos a los metodos de Azure para crear y configurar la conexion
+    [self warmupMSClient];
+    [self loginFB];
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[self navigationController] setNavigationBarHidden:YES animated:YES];
+}
+
+- (void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[self navigationController] setNavigationBarHidden:NO animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -64,6 +87,109 @@
     
     [self.scoopsTableView reloadData];
 }
+
+
+#pragma mark - Azure & Facebook
+
+-(void)warmupMSClient{
+    client = [MSClient clientWithApplicationURL:[NSURL URLWithString:AZUREMOBILESERVICE_ENDPOINT]
+                                 applicationKey:AZUREMOBILESERVICE_APPKEY];
+    
+    NSLog(@"%@", client.debugDescription);
+}
+
+- (void)loginFB {
+    
+    [self loginAppInViewController:self withCompletion:^(NSArray *results) {
+        NSLog(@"Resultados ---> %@", results);
+    }];
+}
+
+- (void)loginAppInViewController:(UIViewController *)controller withCompletion:(completeBlock)bloque{
+    
+    [self loadUserAuthInfo];
+    
+    if (client.currentUser){
+        [client invokeAPI:@"getuserinfofromauthprovider" body:nil HTTPMethod:@"GET" parameters:nil headers:nil completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
+            
+            //tenemos info extra del usuario
+            NSLog(@"%@", result);
+            self.profilePicture = [NSURL URLWithString:result[@"picture"][@"data"][@"url"]];
+            
+        }];
+        
+        return;
+    }
+    
+    [client loginWithProvider:@"facebook"
+                   controller:controller
+                     animated:YES
+                   completion:^(MSUser *user, NSError *error) {
+                       
+                       if (error) {
+                           NSLog(@"Error en el login : %@", error);
+                           bloque(nil);
+                       } else {
+                           NSLog(@"user -> %@", user);
+                           
+                           [self saveAuthInfo];
+                           [client invokeAPI:@"getuserinfofromauthprovider" body:nil HTTPMethod:@"GET" parameters:nil headers:nil completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
+                               
+                               //tenemos info extra del usuario
+                               NSLog(@"%@", result);
+                               self.profilePicture = [NSURL URLWithString:result[@"picture"][@"data"][@"url"]];
+                               
+                           }];
+                           
+                           bloque(@[user]);
+                       }
+                   }];
+    
+}
+
+-(void)setProfilePicture:(NSURL *)profilePicture{
+    
+    _profilePicture = profilePicture;
+    
+    dispatch_queue_t queue = dispatch_queue_create("download.profile.photo", DISPATCH_QUEUE_SERIAL);
+    
+    dispatch_async(queue, ^{
+        
+        NSData *buff = [NSData dataWithContentsOfURL:profilePicture];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.picProfile.image = [UIImage imageWithData:buff];
+            self.picProfile.layer.cornerRadius = self.picProfile.frame.size.width / 2;
+            self.picProfile.clipsToBounds = YES;
+        });
+        
+    });
+    
+}
+
+
+
+- (BOOL)loadUserAuthInfo{
+    userFBId = [[NSUserDefaults standardUserDefaults]objectForKey:@"userID"];
+    tokenFB = [[NSUserDefaults standardUserDefaults]objectForKey:@"tokenFB"];
+    
+    if (userFBId) {
+        client.currentUser = [[MSUser alloc]initWithUserId:userFBId];
+        client.currentUser.mobileServiceAuthenticationToken = [[NSUserDefaults standardUserDefaults]objectForKey:@"tokenFB"];
+        
+        return TRUE;
+    }
+    
+    return FALSE;
+}
+
+
+- (void) saveAuthInfo{
+    [[NSUserDefaults standardUserDefaults]setObject:client.currentUser.userId forKey:@"userID"];
+    [[NSUserDefaults standardUserDefaults]setObject:client.currentUser.mobileServiceAuthenticationToken
+                                             forKey:@"tokenFB"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+}
+
 
 #pragma mark - Table view data source
 

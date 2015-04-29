@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "Scoop.h"
 #import "MyScoopViewController.h"
-#import "MyScoopsTableViewController.h"
+#import "ScoopsTableViewController.h"
 #import "MyScoopsViewController.h"
 #import "NewScoopViewController.h"
 

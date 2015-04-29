@@ -7,10 +7,10 @@
 //
 
 #import <WindowsAzureMobileServices/WindowsAzureMobileServices.h>
-#import "MyScoopsTableViewController.h"
+#import "ScoopsTableViewController.h"
 #import "sharedkeys.h"
 
-@interface MyScoopsTableViewController () {
+@interface ScoopsTableViewController () {
 
     MSClient *client;
     NSString *userFBId;
@@ -22,7 +22,7 @@
 
 @end
 
-@implementation MyScoopsTableViewController
+@implementation ScoopsTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

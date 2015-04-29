@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void (^profileCompletion)(NSDictionary* profInfo);
+typedef void (^completeBlock)(NSArray* results);
+typedef void (^completeOnError)(NSError *error);
+typedef void (^completionWithURL)(NSURL *theUrl, NSError *error);
+
+
 @interface MyScoopsViewController : UIViewController <UITableViewDelegate, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;

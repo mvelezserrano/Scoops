@@ -18,7 +18,7 @@
 		55F3F8DA1AECEB3800FE2900 /* NewScoopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F3F8D81AECEB3800FE2900 /* NewScoopViewController.m */; };
 		55F3F8DB1AECEB3800FE2900 /* NewScoopViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55F3F8D91AECEB3800FE2900 /* NewScoopViewController.xib */; };
 		55F3F8DE1AECFB5300FE2900 /* WindowsAzureMobileServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F3F8DD1AECFB5300FE2900 /* WindowsAzureMobileServices.framework */; };
-		55F3F8E11AECFCEB00FE2900 /* MyScoopsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F3F8E01AECFCEB00FE2900 /* MyScoopsTableViewController.m */; };
+		55F3F8E11AECFCEB00FE2900 /* ScoopsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F3F8E01AECFCEB00FE2900 /* ScoopsTableViewController.m */; };
 		55F3F9521AED5A0700FE2900 /* MyScoopsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F3F9501AED5A0700FE2900 /* MyScoopsViewController.m */; };
 		55F3F9531AED5A0700FE2900 /* MyScoopsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55F3F9511AED5A0700FE2900 /* MyScoopsViewController.xib */; };
 /* End PBXBuildFile section */
@@ -54,8 +54,8 @@
 		55F3F8D91AECEB3800FE2900 /* NewScoopViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewScoopViewController.xib; sourceTree = "<group>"; };
 		55F3F8DC1AECF93C00FE2900 /* sharedkeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sharedkeys.h; sourceTree = "<group>"; };
 		55F3F8DD1AECFB5300FE2900 /* WindowsAzureMobileServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WindowsAzureMobileServices.framework; sourceTree = "<group>"; };
-		55F3F8DF1AECFCEB00FE2900 /* MyScoopsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyScoopsTableViewController.h; sourceTree = "<group>"; };
-		55F3F8E01AECFCEB00FE2900 /* MyScoopsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyScoopsTableViewController.m; sourceTree = "<group>"; };
+		55F3F8DF1AECFCEB00FE2900 /* ScoopsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoopsTableViewController.h; sourceTree = "<group>"; };
+		55F3F8E01AECFCEB00FE2900 /* ScoopsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoopsTableViewController.m; sourceTree = "<group>"; };
 		55F3F94F1AED5A0700FE2900 /* MyScoopsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyScoopsViewController.h; sourceTree = "<group>"; };
 		55F3F9501AED5A0700FE2900 /* MyScoopsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyScoopsViewController.m; sourceTree = "<group>"; };
 		55F3F9511AED5A0700FE2900 /* MyScoopsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyScoopsViewController.xib; sourceTree = "<group>"; };
@@ -143,8 +143,8 @@
 		55F3F8C81AEC08B300FE2900 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				55F3F8DF1AECFCEB00FE2900 /* MyScoopsTableViewController.h */,
-				55F3F8E01AECFCEB00FE2900 /* MyScoopsTableViewController.m */,
+				55F3F8DF1AECFCEB00FE2900 /* ScoopsTableViewController.h */,
+				55F3F8E01AECFCEB00FE2900 /* ScoopsTableViewController.m */,
 				55F3F94F1AED5A0700FE2900 /* MyScoopsViewController.h */,
 				55F3F9501AED5A0700FE2900 /* MyScoopsViewController.m */,
 				55F3F9511AED5A0700FE2900 /* MyScoopsViewController.xib */,
@@ -270,7 +270,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				55F3F9521AED5A0700FE2900 /* MyScoopsViewController.m in Sources */,
-				55F3F8E11AECFCEB00FE2900 /* MyScoopsTableViewController.m in Sources */,
+				55F3F8E11AECFCEB00FE2900 /* ScoopsTableViewController.m in Sources */,
 				55F3F8A91AEC009E00FE2900 /* AppDelegate.m in Sources */,
 				55F3F8DA1AECEB3800FE2900 /* NewScoopViewController.m in Sources */,
 				55F3F8A61AEC009E00FE2900 /* main.m in Sources */,
