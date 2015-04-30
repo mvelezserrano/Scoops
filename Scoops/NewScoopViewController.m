@@ -9,20 +9,23 @@
 #import <WindowsAzureMobileServices/WindowsAzureMobileServices.h>
 #import "NewScoopViewController.h"
 #import "Scoop.h"
+#import "sharedkeys.h"
 
 @interface NewScoopViewController () {
     MSClient *client;
-    NSString *userFBId;
-    NSString *tokenFB;
 }
+
+@property (nonatomic, copy) NSString *authorName;
 
 @end
 
 @implementation NewScoopViewController
 
-- (id) init {
+- (id) initWithMSClient: (MSClient *) aClient authorName: (NSString *) anAuthorName {
     
     if (self = [super init]) {
+        client = aClient;
+        _authorName = anAuthorName;
         self.title = @"New Scoop";
     }
     
@@ -33,7 +36,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    [self loadUserAuthInfo];
     self.scoopTextView.delegate = self;
 }
 
@@ -56,8 +58,30 @@
 - (IBAction)sendScoop:(id)sender {
     
     // Crear el objeto Scoop (con el autor
+    MSTable *news = [client tableWithName:@"news"];
     
-    NSLog(@"Enviar la noticia");
+    Scoop *scoop = [[Scoop alloc] initWithTitle:self.scoopTitleView.text
+                                          photo:nil
+                                           text:self.scoopTextView.text
+                                       authorId:client.currentUser.userId
+                                     authorName:self.authorName
+                                          coors:CLLocationCoordinate2DMake(0, 0)
+                                         status:NOT_PUBLISHED];
+    
+    NSDictionary *scoopDict = [scoop asDictionaryNoId];
+    
+    [news insert:scoopDict
+      completion:^(NSDictionary *item, NSError *error) {
+          
+          if (error) {
+              NSLog(@"Error %@", error);
+          } else {
+              //NSLog(@"INSERCIÓN DE NOTICIA EN AZURE OK!!!");
+              scoop.id = item[@"id"];
+              [self.navigationController popViewControllerAnimated:YES];
+          }
+          
+      }];
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
@@ -159,22 +183,6 @@
 }
 
 
-#pragma mark - Utils
-
-- (BOOL)loadUserAuthInfo{
-    
-    userFBId = [[NSUserDefaults standardUserDefaults]objectForKey:@"userID"];
-    tokenFB = [[NSUserDefaults standardUserDefaults]objectForKey:@"tokenFB"];
-    
-    if (userFBId) {
-        client.currentUser = [[MSUser alloc]initWithUserId:userFBId];
-        client.currentUser.mobileServiceAuthenticationToken = [[NSUserDefaults standardUserDefaults]objectForKey:@"tokenFB"];
-        
-        return TRUE;
-    }
-    
-    return FALSE;
-}
 
 
 

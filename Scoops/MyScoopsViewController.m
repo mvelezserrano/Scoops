@@ -10,6 +10,7 @@
 #import "sharedkeys.h"
 #import "MyScoopsViewController.h"
 #import "MyScoopViewController.h"
+#import "NewScoopViewController.h"
 #import "Scoop.h"
 
 @interface MyScoopsViewController () {
@@ -23,10 +24,23 @@
 @property (nonatomic) BOOL showPublished;
 @property (weak, nonatomic) IBOutlet UIImageView *picProfile;
 @property (strong, nonatomic) NSURL *profilePicture;
+@property (nonatomic, copy) NSString *authorName;
 
 @end
 
 @implementation MyScoopsViewController
+
+- (id) init {
+    
+    if (self = [super init]) {
+        //_scoopsPublished = [[NSMutableArray alloc] init];
+        //_scoopsNotPublished = [[NSMutableArray alloc] init];
+        _showPublished = YES;
+        self.title = @"My Scoops";
+    }
+    
+    return self;
+}
 
 - (id) initWithScoops: (NSArray *) arrayOfScoops {
     
@@ -56,16 +70,20 @@
     // llamamos a los metodos de Azure para crear y configurar la conexion
     [self warmupMSClient];
     [self loginFB];
+    
+    
 }
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [[self navigationController] setNavigationBarHidden:YES animated:YES];
+    //[[self navigationController] setNavigationBarHidden:YES animated:YES];
+    NSLog(@"Cargamos tabla");
+    [self populateModelFromAzure];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [[self navigationController] setNavigationBarHidden:NO animated:YES];
+    //[[self navigationController] setNavigationBarHidden:NO animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -115,7 +133,7 @@
             //tenemos info extra del usuario
             NSLog(@"%@", result);
             self.profilePicture = [NSURL URLWithString:result[@"picture"][@"data"][@"url"]];
-            
+            self.authorName = result[@"name"];
         }];
         
         return;
@@ -138,7 +156,7 @@
                                //tenemos info extra del usuario
                                NSLog(@"%@", result);
                                self.profilePicture = [NSURL URLWithString:result[@"picture"][@"data"][@"url"]];
-                               
+                               self.authorName = result[@"name"];
                            }];
                            
                            bloque(@[user]);
@@ -166,6 +184,12 @@
     
 }
 
+-(void)setAuthorName:(NSString *)authorName {
+    
+    _authorName = authorName;
+    [self addNewScoopButton];
+}
+
 
 
 - (BOOL)loadUserAuthInfo{
@@ -190,6 +214,37 @@
     [[NSUserDefaults standardUserDefaults]synchronize];
 }
 
+#pragma mark - modelo
+- (void)populateModelFromAzure{
+    
+    self.scoopsPublished = [[NSMutableArray alloc] init];
+    self.scoopsNotPublished = [[NSMutableArray alloc] init];
+    
+    MSTable *table = [client tableWithName:@"news"];
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"authorId == %@", client.currentUser.userId];
+    MSQuery *queryModel = [table queryWithPredicate: predicate];
+    [queryModel readWithCompletion:^(NSArray *items, NSInteger totalCount, NSError *error) {
+        for (id item in items) {
+            NSLog(@"item -> %@", item);
+            Scoop *scoop = [[Scoop alloc] initWithTitle:item[@"title"]
+                                                  photo:nil
+                                                   text:item[@"text"]
+                                               authorId:item[@"authorId"]
+                                             authorName:item[@"authorName"]
+                                                  coors:CLLocationCoordinate2DMake(0, 0)
+                                                 status:[item[@"status"] integerValue]];
+            //Si está publicada o no añadir a un array u otro.
+            if (scoop.status == PUBLISHED) {
+                [self.scoopsPublished addObject:scoop];
+            } else {
+                [self.scoopsNotPublished addObject:scoop];
+            }
+            scoop.id = item[@"id"];
+        }
+        [self.scoopsTableView reloadData];
+        [self.activityView stopAnimating];
+    }];
+}
 
 #pragma mark - Table view data source
 
@@ -237,7 +292,7 @@
     // Sincronizar modelo (scoop) --> vista (celda)
     cell.imageView.image = [UIImage imageWithData:scoop.image];
     cell.textLabel.text = scoop.title;
-    cell.detailTextLabel.text = scoop.author;
+    cell.detailTextLabel.text = scoop.authorName;
     
     // Devolver
     return cell;
@@ -258,10 +313,30 @@
         scoop = [self.scoopsNotPublished objectAtIndex:indexPath.row];
     }
     
-    MyScoopViewController *sVC = [[MyScoopViewController alloc] initWithScoop:scoop];
+    MyScoopViewController *sVC = [[MyScoopViewController alloc] initWithScoop:scoop client:client];
     [self.navigationController pushViewController:sVC animated:YES];
 }
 
+
+- (void) createNewScoop: (id) sender {
+    
+    // Crear el controlador
+    NewScoopViewController *newScoopVC = [[NewScoopViewController alloc] initWithMSClient:client
+                                                                               authorName:self.authorName];
+    
+    // Hacer el push
+    [self.navigationController pushViewController:newScoopVC
+                                         animated:YES];
+}
+
+- (void) addNewScoopButton {
+    
+    // Add the new Scoop button
+    UIBarButtonItem *newScoop = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
+                                                                              target:self
+                                                                              action:@selector(createNewScoop:)];
+    self.navigationItem.rightBarButtonItem = newScoop;
+}
 
 
 

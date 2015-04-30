@@ -15,7 +15,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *scoopTitleView;
 @property (weak, nonatomic) IBOutlet UITextView *scoopTextView;
 
-@property (strong, nonatomic) Scoop *model;
+- (id) initWithMSClient: (MSClient *) aClient authorName: (NSString *) anAuthorName;
+
 - (IBAction)sendScoop:(id)sender;
 
 @end

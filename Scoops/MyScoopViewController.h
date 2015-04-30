@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 Miguel Ángel Vélez Serrano. All rights reserved.
 //
 
+#import <WindowsAzureMobileServices/WindowsAzureMobileServices.h>
 @import UIKit;
 @class Scoop;
 
@@ -18,7 +19,7 @@
 
 @property (strong, nonatomic) Scoop *model;
 
--(id) initWithScoop: (Scoop *) scoop;
+-(id) initWithScoop: (Scoop *) scoop client: (MSClient *) aClient;
 
 - (IBAction)publish:(id)sender;
 @end

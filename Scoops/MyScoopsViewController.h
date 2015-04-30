@@ -19,6 +19,7 @@ typedef void (^completionWithURL)(NSURL *theUrl, NSError *error);
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 @property (weak, nonatomic) IBOutlet UITableView *scoopsTableView;
 @property (strong, nonatomic) NSArray *arrayOfMyScoops;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityView;
 
 - (id) initWithScoops: (NSArray *) arrayOfScoops;
 

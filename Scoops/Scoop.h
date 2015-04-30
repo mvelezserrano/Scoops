@@ -11,16 +11,32 @@
 
 @interface Scoop : NSObject
 
-- (id)initWithTitle:(NSString*)title andPhoto:(NSData *)img aText:(NSString*)text anAuthor:(NSString *)author aCoor:(CLLocationCoordinate2D) coors;
-- (id)initWithTitle:(NSString *)title andPhoto:(NSData *)img aText:(NSString *)text anAuthor:(NSString *)author aCoor:(CLLocationCoordinate2D)coors status: (int) aStatus;
+- (id)initWithTitle:(NSString*)title
+              photo:(NSData *)img
+               text:(NSString*)aText
+           authorId:(NSString *)anAuthorId
+         authorName:(NSString *)anAuthorName
+              coors:(CLLocationCoordinate2D) coors;
 
-@property (readonly) NSString *title;
-@property (readonly) NSString *text;
-@property (readonly) NSString *author;
-@property (readonly) CLLocationCoordinate2D coors;
-@property (readonly) NSData *image;
-@property (readonly) NSDate *dateCreated;
-@property (readonly) int status;
+- (id)initWithTitle:(NSString*)title
+              photo:(NSData *)img
+               text:(NSString*)aText
+           authorId:(NSString *)anAuthorId
+         authorName:(NSString *)anAuthorName
+              coors:(CLLocationCoordinate2D) coors
+             status: (int) aStatus;
 
+@property (nonatomic, copy) NSString *id;
+@property (nonatomic, copy) NSString *authorName;
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *text;
+@property (nonatomic, copy) NSString *authorId;
+@property (nonatomic) CLLocationCoordinate2D coors;
+@property (nonatomic, strong) NSData *image;
+@property (nonatomic, strong) NSDate *creationDate;
+@property (nonatomic) int status;
+
+-(NSDictionary *) asDictionary;
+-(NSDictionary *) asDictionaryNoId;
 
 @end

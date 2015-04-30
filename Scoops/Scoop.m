@@ -7,18 +7,10 @@
 //
 
 #import "Scoop.h"
+#import "sharedkeys.h"
 
 
 @interface Scoop ()
-
-@property (nonatomic, strong) NSString *title;
-@property (nonatomic, strong) NSString *text;
-@property (nonatomic, strong) NSString *author;
-@property (nonatomic) CLLocationCoordinate2D coors;
-@property (nonatomic, strong) NSData *image;
-@property (nonatomic, strong) NSDate *dateCreated;
-@property (nonatomic) BOOL published;
-
 
 @end
 
@@ -26,37 +18,78 @@
 @implementation Scoop
 
 
--(id)initWithTitle:(NSString *)title andPhoto:(NSData *)img aText:(NSString *)text anAuthor:(NSString *)author aCoor:(CLLocationCoordinate2D)coors{
+- (id)initWithTitle:(NSString*)title
+              photo:(NSData *)img
+               text:(NSString*)aText
+           authorId:(NSString *)anAuthorId
+         authorName:(NSString *)anAuthorName
+              coors:(CLLocationCoordinate2D) coors {
     
     if (self = [super init]) {
         _title = title;
-        _text = text;
-        _author = author;
-        _coors = coors;
         _image = img;
-        _dateCreated = [NSDate date];
-        _published = NO;
+        _text = aText;
+        _authorId = anAuthorId;
+        _authorName = anAuthorName;
+        _coors = coors;
+        
+        _creationDate = [NSDate date];
+        _status = NOT_PUBLISHED;
     }
     
     return self;
     
 }
 
--(id)initWithTitle:(NSString *)title andPhoto:(NSData *)img aText:(NSString *)text anAuthor:(NSString *)author aCoor:(CLLocationCoordinate2D)coors status: (int) aStatus {
+- (id)initWithTitle:(NSString*)title
+              photo:(NSData *)img
+               text:(NSString*)aText
+           authorId:(NSString *)anAuthorId
+         authorName:(NSString *)anAuthorName
+              coors:(CLLocationCoordinate2D) coors
+             status: (int) aStatus {
     
     if (self = [super init]) {
         _title = title;
-        _text = text;
-        _author = author;
-        _coors = coors;
         _image = img;
-        _dateCreated = [NSDate date];
+        _text = aText;
+        _authorId = anAuthorId;
+        _authorName = anAuthorName;
+        _coors = coors;
+        
+        _creationDate = [NSDate date];
         _status = aStatus;
     }
     
     return self;
     
 }
+
+-(NSDictionary *) asDictionary {
+    
+    return @{@"id"         : self.id,
+             @"title"      : self.title,
+             @"text"       : self.text,
+             @"authorId"     : self.authorId,
+             @"authorName" : self.authorName,
+             @"coors"      : @"",
+             //@"image"      : self.image,
+             @"creationDate"    : self.creationDate,
+             @"status"     : [NSNumber numberWithInt:self.status]};
+}
+
+-(NSDictionary *) asDictionaryNoId {
+    
+    return @{@"title"      : self.title,
+             @"text"       : self.text,
+             @"authorId"     : self.authorId,
+             @"authorName" : self.authorName,
+             @"coors"      : @"",
+             //@"image"      : self.image,
+             @"creationDate"    : self.creationDate,
+             @"status"     : [NSNumber numberWithInt:self.status]};
+}
+
 
 
 #pragma mark - Overwritten
