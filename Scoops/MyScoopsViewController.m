@@ -11,12 +11,14 @@
 #import "MyScoopsViewController.h"
 #import "MyScoopViewController.h"
 #import "NewScoopViewController.h"
+#import "AzureSession.h"
 #import "Scoop.h"
 
 @interface MyScoopsViewController () {
-    MSClient *client;
-    NSString *userFBId;
-    NSString *tokenFB;
+    //MSClient *client;
+    //NSString *userFBId;
+    //NSString *tokenFB;
+    AzureSession *azureSession;
 }
 
 @property (strong, nonatomic) NSMutableArray *scoopsPublished;
@@ -30,9 +32,10 @@
 
 @implementation MyScoopsViewController
 
-- (id) init {
+- (id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     
-    if (self = [super init]) {
+    if (self = [super initWithNibName:nil
+                               bundle:nil]) {
         //_scoopsPublished = [[NSMutableArray alloc] init];
         //_scoopsNotPublished = [[NSMutableArray alloc] init];
         _showPublished = YES;
@@ -68,9 +71,11 @@
     self.navigationItem.title = @"My Scoops";
     
     // llamamos a los metodos de Azure para crear y configurar la conexion
-    [self warmupMSClient];
-    [self loginFB];
+    //[self warmupMSClient];
+    //[self loginFB];
     
+    azureSession = [AzureSession sharedAzureSession];
+    [azureSession loginFBInViewController:self];
     
 }
 
@@ -108,7 +113,7 @@
 
 
 #pragma mark - Azure & Facebook
-
+/*
 -(void)warmupMSClient{
     client = [MSClient clientWithApplicationURL:[NSURL URLWithString:AZUREMOBILESERVICE_ENDPOINT]
                                  applicationKey:AZUREMOBILESERVICE_APPKEY];
@@ -164,7 +169,7 @@
                    }];
     
 }
-
+*/
 -(void)setProfilePicture:(NSURL *)profilePicture{
     
     _profilePicture = profilePicture;
@@ -191,7 +196,7 @@
 }
 
 
-
+/*
 - (BOOL)loadUserAuthInfo{
     userFBId = [[NSUserDefaults standardUserDefaults]objectForKey:@"userID"];
     tokenFB = [[NSUserDefaults standardUserDefaults]objectForKey:@"tokenFB"];
@@ -213,12 +218,14 @@
                                              forKey:@"tokenFB"];
     [[NSUserDefaults standardUserDefaults]synchronize];
 }
-
+*/
 #pragma mark - modelo
 - (void)populateModelFromAzure{
     
     self.scoopsPublished = [[NSMutableArray alloc] init];
     self.scoopsNotPublished = [[NSMutableArray alloc] init];
+    
+    MSClient *client = [azureSession client];
     
     MSTable *table = [client tableWithName:@"news"];
     NSPredicate * predicate = [NSPredicate predicateWithFormat:@"authorId == %@", client.currentUser.userId];
@@ -313,7 +320,7 @@
         scoop = [self.scoopsNotPublished objectAtIndex:indexPath.row];
     }
     
-    MyScoopViewController *sVC = [[MyScoopViewController alloc] initWithScoop:scoop client:client];
+    MyScoopViewController *sVC = [[MyScoopViewController alloc] initWithScoop:scoop client:[azureSession client]];
     [self.navigationController pushViewController:sVC animated:YES];
 }
 
@@ -321,7 +328,7 @@
 - (void) createNewScoop: (id) sender {
     
     // Crear el controlador
-    NewScoopViewController *newScoopVC = [[NewScoopViewController alloc] initWithMSClient:client
+    NewScoopViewController *newScoopVC = [[NewScoopViewController alloc] initWithMSClient:[azureSession client]
                                                                                authorName:self.authorName];
     
     // Hacer el push

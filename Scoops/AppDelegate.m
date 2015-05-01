@@ -8,11 +8,12 @@
 
 #import "AppDelegate.h"
 #import "Scoop.h"
+#import "ScoopsReaderTableViewController.h"
 #import "MyScoopViewController.h"
-#import "ScoopsTableViewController.h"
 #import "MyScoopsViewController.h"
 #import "NewScoopViewController.h"
 #import "sharedkeys.h"
+#import "AzureSession.h"
 
 @interface AppDelegate ()
 
@@ -25,16 +26,18 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
+    [AzureSession sharedAzureSession];
+    
+    ScoopsReaderTableViewController *scoopsReaderVC = [[ScoopsReaderTableViewController alloc] initWithStyle:UITableViewStylePlain];
+    UINavigationController *scoopsReaderNavC = [[UINavigationController alloc] initWithRootViewController:scoopsReaderVC];
     
     MyScoopsViewController *myScoopsVC = [[MyScoopsViewController alloc] init];
     UINavigationController *myScoopsNavC = [[UINavigationController alloc] initWithRootViewController:myScoopsVC];
     
     UITabBarController *tb = [[UITabBarController alloc] init];
-    [tb setViewControllers:@[myScoopsNavC]];
+    [tb setViewControllers:@[scoopsReaderNavC, myScoopsNavC]];
     
     self.window.rootViewController = tb;
-    
-    
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];

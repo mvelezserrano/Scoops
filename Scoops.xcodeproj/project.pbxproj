@@ -18,9 +18,11 @@
 		55F3F8DA1AECEB3800FE2900 /* NewScoopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F3F8D81AECEB3800FE2900 /* NewScoopViewController.m */; };
 		55F3F8DB1AECEB3800FE2900 /* NewScoopViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55F3F8D91AECEB3800FE2900 /* NewScoopViewController.xib */; };
 		55F3F8DE1AECFB5300FE2900 /* WindowsAzureMobileServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F3F8DD1AECFB5300FE2900 /* WindowsAzureMobileServices.framework */; };
-		55F3F8E11AECFCEB00FE2900 /* ScoopsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F3F8E01AECFCEB00FE2900 /* ScoopsTableViewController.m */; };
 		55F3F9521AED5A0700FE2900 /* MyScoopsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F3F9501AED5A0700FE2900 /* MyScoopsViewController.m */; };
 		55F3F9531AED5A0700FE2900 /* MyScoopsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55F3F9511AED5A0700FE2900 /* MyScoopsViewController.xib */; };
+		55F3F9861AF2A25A00FE2900 /* ScoopsReaderTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F3F9841AF2A25A00FE2900 /* ScoopsReaderTableViewController.m */; };
+		55F3F9871AF2A25A00FE2900 /* ScoopsReaderTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55F3F9851AF2A25A00FE2900 /* ScoopsReaderTableViewController.xib */; };
+		55F3F98A1AF2A5F900FE2900 /* AzureSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F3F9891AF2A5F900FE2900 /* AzureSession.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,11 +56,14 @@
 		55F3F8D91AECEB3800FE2900 /* NewScoopViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewScoopViewController.xib; sourceTree = "<group>"; };
 		55F3F8DC1AECF93C00FE2900 /* sharedkeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sharedkeys.h; sourceTree = "<group>"; };
 		55F3F8DD1AECFB5300FE2900 /* WindowsAzureMobileServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WindowsAzureMobileServices.framework; sourceTree = "<group>"; };
-		55F3F8DF1AECFCEB00FE2900 /* ScoopsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoopsTableViewController.h; sourceTree = "<group>"; };
-		55F3F8E01AECFCEB00FE2900 /* ScoopsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoopsTableViewController.m; sourceTree = "<group>"; };
 		55F3F94F1AED5A0700FE2900 /* MyScoopsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyScoopsViewController.h; sourceTree = "<group>"; };
 		55F3F9501AED5A0700FE2900 /* MyScoopsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyScoopsViewController.m; sourceTree = "<group>"; };
 		55F3F9511AED5A0700FE2900 /* MyScoopsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyScoopsViewController.xib; sourceTree = "<group>"; };
+		55F3F9831AF2A25A00FE2900 /* ScoopsReaderTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoopsReaderTableViewController.h; sourceTree = "<group>"; };
+		55F3F9841AF2A25A00FE2900 /* ScoopsReaderTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoopsReaderTableViewController.m; sourceTree = "<group>"; };
+		55F3F9851AF2A25A00FE2900 /* ScoopsReaderTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScoopsReaderTableViewController.xib; sourceTree = "<group>"; };
+		55F3F9881AF2A5F900FE2900 /* AzureSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AzureSession.h; sourceTree = "<group>"; };
+		55F3F9891AF2A5F900FE2900 /* AzureSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AzureSession.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +107,7 @@
 		55F3F8A21AEC009E00FE2900 /* Scoops */ = {
 			isa = PBXGroup;
 			children = (
+				55F3F9901AF3A8D400FE2900 /* Resources */,
 				55F3F8DC1AECF93C00FE2900 /* sharedkeys.h */,
 				55F3F8CC1AEC0B9E00FE2900 /* Model */,
 				55F3F8C81AEC08B300FE2900 /* Controllers */,
@@ -143,8 +149,9 @@
 		55F3F8C81AEC08B300FE2900 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				55F3F8DF1AECFCEB00FE2900 /* ScoopsTableViewController.h */,
-				55F3F8E01AECFCEB00FE2900 /* ScoopsTableViewController.m */,
+				55F3F9831AF2A25A00FE2900 /* ScoopsReaderTableViewController.h */,
+				55F3F9841AF2A25A00FE2900 /* ScoopsReaderTableViewController.m */,
+				55F3F9851AF2A25A00FE2900 /* ScoopsReaderTableViewController.xib */,
 				55F3F94F1AED5A0700FE2900 /* MyScoopsViewController.h */,
 				55F3F9501AED5A0700FE2900 /* MyScoopsViewController.m */,
 				55F3F9511AED5A0700FE2900 /* MyScoopsViewController.xib */,
@@ -163,8 +170,17 @@
 			children = (
 				55F3F8C91AEC0B9A00FE2900 /* Scoop.h */,
 				55F3F8CA1AEC0B9A00FE2900 /* Scoop.m */,
+				55F3F9881AF2A5F900FE2900 /* AzureSession.h */,
+				55F3F9891AF2A5F900FE2900 /* AzureSession.m */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		55F3F9901AF3A8D400FE2900 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -250,6 +266,7 @@
 				55F3F9531AED5A0700FE2900 /* MyScoopsViewController.xib in Resources */,
 				55F3F8DB1AECEB3800FE2900 /* NewScoopViewController.xib in Resources */,
 				55F3F8AE1AEC009E00FE2900 /* LaunchScreen.xib in Resources */,
+				55F3F9871AF2A25A00FE2900 /* ScoopsReaderTableViewController.xib in Resources */,
 				55F3F8C71AEC08AD00FE2900 /* MyScoopViewController.xib in Resources */,
 				55F3F8AB1AEC009E00FE2900 /* Images.xcassets in Resources */,
 			);
@@ -270,12 +287,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				55F3F9521AED5A0700FE2900 /* MyScoopsViewController.m in Sources */,
-				55F3F8E11AECFCEB00FE2900 /* ScoopsTableViewController.m in Sources */,
+				55F3F98A1AF2A5F900FE2900 /* AzureSession.m in Sources */,
 				55F3F8A91AEC009E00FE2900 /* AppDelegate.m in Sources */,
 				55F3F8DA1AECEB3800FE2900 /* NewScoopViewController.m in Sources */,
 				55F3F8A61AEC009E00FE2900 /* main.m in Sources */,
 				55F3F8CB1AEC0B9A00FE2900 /* Scoop.m in Sources */,
 				55F3F8C61AEC08AD00FE2900 /* MyScoopViewController.m in Sources */,
+				55F3F9861AF2A25A00FE2900 /* ScoopsReaderTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
