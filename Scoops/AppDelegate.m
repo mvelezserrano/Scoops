@@ -26,12 +26,13 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
-    [AzureSession sharedAzureSession];
+    AzureSession *session = [AzureSession sharedAzureSession];
     
     ScoopsReaderTableViewController *scoopsReaderVC = [[ScoopsReaderTableViewController alloc] initWithStyle:UITableViewStylePlain];
     UINavigationController *scoopsReaderNavC = [[UINavigationController alloc] initWithRootViewController:scoopsReaderVC];
     
     MyScoopsViewController *myScoopsVC = [[MyScoopsViewController alloc] init];
+    session.delegate = myScoopsVC;
     UINavigationController *myScoopsNavC = [[UINavigationController alloc] initWithRootViewController:myScoopsVC];
     
     UITabBarController *tb = [[UITabBarController alloc] init];

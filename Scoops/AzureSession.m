@@ -11,6 +11,8 @@
 
 @interface AzureSession ()
 
+@property (strong, nonatomic) NSURL *profilePicture;
+
 @end
 
 @implementation AzureSession
@@ -52,12 +54,12 @@
     [self loadUserAuthInfo];
     
     if (self.client.currentUser){
-        [self.client invokeAPI:@"getCurrentUserInfo" body:nil HTTPMethod:@"GET" parameters:nil headers:nil completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
+        [self.client invokeAPI:@"getuserinfofromauthprovider" body:nil HTTPMethod:@"GET" parameters:nil headers:nil completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
             
             //tenemos info extra del usuario
             NSLog(@"%@", result);
-            //self.profilePicture = [NSURL URLWithString:result[@"picture"][@"data"][@"url"]];
-            
+            self.profilePicture = [NSURL URLWithString:result[@"picture"][@"data"][@"url"]];
+            [self notifyLoginSucceed];
         }];
         
         return;
@@ -75,17 +77,34 @@
                            NSLog(@"user -> %@", user);
                            
                            [self saveAuthInfo];
-                           [self.client invokeAPI:@"getCurrentUserInfo" body:nil HTTPMethod:@"GET" parameters:nil headers:nil completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
+                           [self.client invokeAPI:@"getuserinfofromauthprovider" body:nil HTTPMethod:@"GET" parameters:nil headers:nil completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
                                
                                //tenemos info extra del usuario
                                NSLog(@"%@", result);
-                               //self.profilePicture = [NSURL URLWithString:result[@"picture"][@"data"][@"url"]];
-                               
+                               self.profilePicture = [NSURL URLWithString:result[@"picture"][@"data"][@"url"]];
+                               [self notifyLoginSucceed];
                            }];
                            
                            bloque(@[user]);
                        }
                    }];
+    
+}
+
+
+-(void) notifyLoginSucceed{
+    /*
+    NSNotification *n = [NSNotification
+                         notificationWithName:PICTURE_URL_DID_DOWNLOAD_NOTIFICATION
+                         object:self
+                         userInfo:@{NSURL_KEY : self.profilePicture}];
+    
+    [[NSNotificationCenter defaultCenter] postNotification:n];
+    */
+    // Avisamos tambien al delegado en caso de haberlo
+    [self.delegate setProfilePicture:self.profilePicture];
+    [self.delegate populateModelFromAzure];
+    
     
 }
 

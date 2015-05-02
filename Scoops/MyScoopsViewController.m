@@ -15,9 +15,7 @@
 #import "Scoop.h"
 
 @interface MyScoopsViewController () {
-    //MSClient *client;
-    //NSString *userFBId;
-    //NSString *tokenFB;
+
     AzureSession *azureSession;
 }
 
@@ -36,140 +34,36 @@
     
     if (self = [super initWithNibName:nil
                                bundle:nil]) {
-        //_scoopsPublished = [[NSMutableArray alloc] init];
-        //_scoopsNotPublished = [[NSMutableArray alloc] init];
         _showPublished = YES;
         self.title = @"My Scoops";
     }
     
     return self;
 }
-
-- (id) initWithScoops: (NSArray *) arrayOfScoops {
-    
-    if (self = [super initWithNibName:nil bundle:nil]) {
-        _arrayOfMyScoops = [[NSArray alloc] initWithArray:arrayOfScoops];
-        _scoopsPublished = [[NSMutableArray alloc] init];
-        _scoopsNotPublished = [[NSMutableArray alloc] init];
-        for (Scoop *scoop in arrayOfScoops) {
-            if (scoop.status == PUBLISHED) {
-                [_scoopsPublished addObject:scoop];
-            } else {
-                [_scoopsNotPublished addObject:scoop];
-            }
-        }
-        _showPublished = YES;
-        self.title = @"My Scoops";
-    }
-    
-    return self;
-}
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"My Scoops";
     
-    // llamamos a los metodos de Azure para crear y configurar la conexion
-    //[self warmupMSClient];
-    //[self loginFB];
-    
     azureSession = [AzureSession sharedAzureSession];
     [azureSession loginFBInViewController:self];
-    
 }
 
-- (void) viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    //[[self navigationController] setNavigationBarHidden:YES animated:YES];
-    NSLog(@"Cargamos tabla");
-    [self populateModelFromAzure];
-}
-
-- (void) viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    //[[self navigationController] setNavigationBarHidden:NO animated:YES];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 - (IBAction)segmentedControlAction:(id)sender {
     
     if(self.segmentedControl.selectedSegmentIndex == 0) {
         // Noticias publicadas
-        NSLog(@"Noticias publicadas!!!");
         self.showPublished = YES;
     } else {
         // Noticias No publicadas
-        NSLog(@"Noticias NO publicadas!!!");
         self.showPublished = NO;
     }
     
     [self.scoopsTableView reloadData];
 }
 
-
-#pragma mark - Azure & Facebook
-/*
--(void)warmupMSClient{
-    client = [MSClient clientWithApplicationURL:[NSURL URLWithString:AZUREMOBILESERVICE_ENDPOINT]
-                                 applicationKey:AZUREMOBILESERVICE_APPKEY];
-    
-    NSLog(@"%@", client.debugDescription);
-}
-
-- (void)loginFB {
-    
-    [self loginAppInViewController:self withCompletion:^(NSArray *results) {
-        NSLog(@"Resultados ---> %@", results);
-    }];
-}
-
-- (void)loginAppInViewController:(UIViewController *)controller withCompletion:(completeBlock)bloque{
-    
-    [self loadUserAuthInfo];
-    
-    if (client.currentUser){
-        [client invokeAPI:@"getuserinfofromauthprovider" body:nil HTTPMethod:@"GET" parameters:nil headers:nil completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
-            
-            //tenemos info extra del usuario
-            NSLog(@"%@", result);
-            self.profilePicture = [NSURL URLWithString:result[@"picture"][@"data"][@"url"]];
-            self.authorName = result[@"name"];
-        }];
-        
-        return;
-    }
-    
-    [client loginWithProvider:@"facebook"
-                   controller:controller
-                     animated:YES
-                   completion:^(MSUser *user, NSError *error) {
-                       
-                       if (error) {
-                           NSLog(@"Error en el login : %@", error);
-                           bloque(nil);
-                       } else {
-                           NSLog(@"user -> %@", user);
-                           
-                           [self saveAuthInfo];
-                           [client invokeAPI:@"getuserinfofromauthprovider" body:nil HTTPMethod:@"GET" parameters:nil headers:nil completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
-                               
-                               //tenemos info extra del usuario
-                               NSLog(@"%@", result);
-                               self.profilePicture = [NSURL URLWithString:result[@"picture"][@"data"][@"url"]];
-                               self.authorName = result[@"name"];
-                           }];
-                           
-                           bloque(@[user]);
-                       }
-                   }];
-    
-}
-*/
+//AzureSessionDelegate
 -(void)setProfilePicture:(NSURL *)profilePicture{
     
     _profilePicture = profilePicture;
@@ -186,40 +80,8 @@
         });
         
     });
-    
 }
 
--(void)setAuthorName:(NSString *)authorName {
-    
-    _authorName = authorName;
-    [self addNewScoopButton];
-}
-
-
-/*
-- (BOOL)loadUserAuthInfo{
-    userFBId = [[NSUserDefaults standardUserDefaults]objectForKey:@"userID"];
-    tokenFB = [[NSUserDefaults standardUserDefaults]objectForKey:@"tokenFB"];
-    
-    if (userFBId) {
-        client.currentUser = [[MSUser alloc]initWithUserId:userFBId];
-        client.currentUser.mobileServiceAuthenticationToken = [[NSUserDefaults standardUserDefaults]objectForKey:@"tokenFB"];
-        
-        return TRUE;
-    }
-    
-    return FALSE;
-}
-
-
-- (void) saveAuthInfo{
-    [[NSUserDefaults standardUserDefaults]setObject:client.currentUser.userId forKey:@"userID"];
-    [[NSUserDefaults standardUserDefaults]setObject:client.currentUser.mobileServiceAuthenticationToken
-                                             forKey:@"tokenFB"];
-    [[NSUserDefaults standardUserDefaults]synchronize];
-}
-*/
-#pragma mark - modelo
 - (void)populateModelFromAzure{
     
     self.scoopsPublished = [[NSMutableArray alloc] init];
@@ -253,6 +115,15 @@
     }];
 }
 
+
+-(void)setAuthorName:(NSString *)authorName {
+    
+    _authorName = authorName;
+    [self addNewScoopButton];
+}
+
+
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -269,7 +140,6 @@
         // Noticias No publicadas
         return [self.scoopsNotPublished count];
     }
-    
 }
 
 

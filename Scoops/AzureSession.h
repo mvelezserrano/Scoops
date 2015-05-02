@@ -14,11 +14,23 @@ typedef void (^completeBlock)(NSArray* results);
 typedef void (^completeOnError)(NSError *error);
 typedef void (^completionWithURL)(NSURL *theUrl, NSError *error);
 
+@protocol AzureSessionDelegate <NSObject>
+
+@optional
+
+- (void) setProfilePicture:(NSURL *)profilePicture;
+- (void) populateModelFromAzure;
+
+@end
+
 @interface AzureSession : NSObject
 
 @property (strong, nonatomic) MSClient *client;
-@property (copy, nonatomic) NSString * userFBId;
+@property (copy, nonatomic) NSString *userFBId;
 @property (copy, nonatomic) NSString *tokenFB;
+
+@property (weak, nonatomic) id<AzureSessionDelegate> delegate;
+
 
 +(instancetype) sharedAzureSession;
 
