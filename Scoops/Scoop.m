@@ -7,7 +7,7 @@
 //
 
 #import "Scoop.h"
-#import "sharedkeys.h"
+#import "Settings.h"
 
 
 @interface Scoop ()

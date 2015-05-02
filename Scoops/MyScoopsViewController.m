@@ -7,7 +7,7 @@
 //
 
 #import <WindowsAzureMobileServices/WindowsAzureMobileServices.h>
-#import "sharedkeys.h"
+#import "Settings.h"
 #import "MyScoopsViewController.h"
 #import "MyScoopViewController.h"
 #import "NewScoopViewController.h"

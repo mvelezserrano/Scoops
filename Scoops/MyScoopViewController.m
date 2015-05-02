@@ -9,7 +9,7 @@
 #import <WindowsAzureMobileServices/WindowsAzureMobileServices.h>
 #import "MyScoopViewController.h"
 #import "Scoop.h"
-#import "sharedkeys.h"
+#import "Settings.h"
 
 @interface MyScoopViewController () {
     MSClient *client;
