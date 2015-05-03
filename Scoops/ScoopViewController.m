@@ -116,6 +116,7 @@
     
     self.titleView.text = self.model.title;
     self.autorView.text = self.model.authorName;
+    self.scoopPhotoView.image = self.model.image;
     self.textView.text = self.model.text;
     [self.activityView stopAnimating];
 }

@@ -7,13 +7,14 @@
 //
 
 #import <WindowsAzureMobileServices/WindowsAzureMobileServices.h>
+#import "AzureSession.h"
 #import "MyScoopViewController.h"
 #import "ASStarRatingView.h"
 #import "Scoop.h"
 #import "Settings.h"
 
 @interface MyScoopViewController () {
-    MSClient *client;
+    AzureSession *azureSession;
 }
 
 @property (nonatomic) int actualRating;
@@ -24,12 +25,12 @@
 
 @synthesize actualRatingView;
 
--(id) initWithScoop: (Scoop *) scoop client: (MSClient *) aClient {
+-(id) initWithScoop: (Scoop *) scoop {
     
     if (self = [super initWithNibName:nil bundle:nil]) {
         
+        azureSession = [AzureSession sharedAzureSession];
         _model = scoop;
-        client = aClient;
     }
     
     return self;
@@ -44,13 +45,41 @@
         self.publishSwitch.hidden = YES;
     }
     
-    [self syncViewWithModel];
+    if (self.model.downloaded == NO) {
+        [self downloadScoop];
+    } else {
+        [self syncViewWithModel];
+    }
+    
+    //[self syncViewWithModel];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+- (void) downloadScoop {
+    MSClient *client = [azureSession client];
+    
+    MSTable *table = [client tableWithName:@"news"];
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"id == %@", self.model.id];
+    MSQuery *queryModel = [table queryWithPredicate: predicate];
+    [queryModel readWithCompletion:^(NSArray *items, NSInteger totalCount, NSError *error) {
+        id item = [items objectAtIndex:0];
+        self.model.text = item[@"text"];
+        self.model.coors = CLLocationCoordinate2DMake(0, 0);
+        self.model.creationDate = item[@"creationDate"];
+        self.model.status = [item[@"status"] integerValue];
+        self.model.rating = [item[@"valoracion"] integerValue];
+        self.model.downloaded = YES;
+        
+        [self syncViewWithModel];
+    }];
+    
+}
+
 
 - (void) syncViewWithModel {
     
@@ -59,6 +88,7 @@
     actualRatingView.rating = self.model.rating;
     
     self.titleView.text = self.model.title;
+    self.scoopPhotoView.image = self.model.image;
     self.textView.text = self.model.text;
     
     if (self.model.status == NOT_PUBLISHED) {
@@ -74,6 +104,7 @@
     } else {
         self.model.status = NOT_PUBLISHED;
     }
+    MSClient *client = [azureSession client];
     MSTable *table = [client tableWithName:@"news"];
     [table update:[self.model asDictionary] completion:^(NSDictionary *item, NSError *error) {
         if (error) {

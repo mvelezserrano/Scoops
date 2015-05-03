@@ -82,6 +82,49 @@
     });
 }
 
+
+- (void) getHeadlines {
+    
+    self.scoopsPublished = [[NSMutableArray alloc] init];
+    [self.scoopsPublished removeAllObjects];
+    self.scoopsNotPublished = [[NSMutableArray alloc] init];
+    [self.scoopsNotPublished removeAllObjects];
+    
+    MSClient *client = [azureSession client];
+    
+    NSDictionary *parameters = @{@"authorId" : client.currentUser.userId};
+    
+    [client invokeAPI:@"getheadlinesforauthor"
+                 body:nil
+           HTTPMethod:@"GET"
+           parameters:parameters
+              headers:nil
+           completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
+               if (!error) {
+                   for (id item in result) {
+                       Scoop *scoop = [[Scoop alloc] init];
+                       scoop.id = item[@"id"];
+                       scoop.title = item[@"title"];
+                       scoop.authorName = item[@"authorName"];
+                       scoop.downloaded = NO;
+                       scoop.status = [item[@"status"] integerValue];
+                       if (scoop.status == PUBLISHED) {
+                           [self.scoopsPublished addObject:scoop];
+                       } else {
+                           [self.scoopsNotPublished addObject:scoop];
+                       }
+                   }
+               } else {
+                   NSLog(@"Error: %@", error);
+               }
+               
+               [self.scoopsTableView reloadData];
+               [self.activityView stopAnimating];
+           }];
+    
+}
+
+/*
 - (void)populateModelFromAzure{
     
     self.scoopsPublished = [[NSMutableArray alloc] init];
@@ -116,12 +159,12 @@
         [self.activityView stopAnimating];
     }];
 }
-
+*/
 
 -(void)setAuthorName:(NSString *)authorName {
     
     _authorName = authorName;
-    [self addNewScoopButton];
+    [self addNavigationBarButtons];
 }
 
 
@@ -169,7 +212,7 @@
 
     // Configurar
     // Sincronizar modelo (scoop) --> vista (celda)
-    cell.imageView.image = [UIImage imageWithData:scoop.image];
+    cell.imageView.image = scoop.image;
     cell.textLabel.text = scoop.title;
     cell.detailTextLabel.text = scoop.authorName;
     
@@ -182,8 +225,6 @@
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    NSLog(@"didSelectRow");
-    
     // Averiguar el scoop
     Scoop *scoop = nil;
     if (self.showPublished) {
@@ -192,7 +233,7 @@
         scoop = [self.scoopsNotPublished objectAtIndex:indexPath.row];
     }
     
-    MyScoopViewController *sVC = [[MyScoopViewController alloc] initWithScoop:scoop client:[azureSession client]];
+    MyScoopViewController *sVC = [[MyScoopViewController alloc] initWithScoop:scoop];
     [self.navigationController pushViewController:sVC animated:YES];
 }
 
@@ -208,7 +249,13 @@
                                          animated:YES];
 }
 
-- (void) addNewScoopButton {
+- (void) addNavigationBarButtons {
+    
+    // Add the reload Scoops button
+    UIBarButtonItem *reloadScoops = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
+                                                                                  target:self
+                                                                                  action:@selector(getHeadlines)];
+    self.navigationItem.leftBarButtonItem = reloadScoops;
     
     // Add the new Scoop button
     UIBarButtonItem *newScoop = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose

@@ -15,6 +15,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *titleView;
 @property (weak, nonatomic) IBOutlet UILabel *autorView;
+@property (weak, nonatomic) IBOutlet UIImageView *scoopPhotoView;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (weak, nonatomic) IBOutlet UIButton *valorarButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityView;

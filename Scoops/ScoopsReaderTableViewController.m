@@ -94,8 +94,6 @@
 
 - (void) getHeadlines {
     
-    NSLog(@"Descargamos cabeceras");
-    
     self.scoops = [[NSMutableArray alloc] init];
     [self.scoops removeAllObjects];
     
@@ -123,11 +121,11 @@
 
 - (void) addReloadScoopsButton {
     
-    // Add the new Scoop button
+    // Add the reload Scoops button
     UIBarButtonItem *reloadScoops = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
                                                                               target:self
                                                                               action:@selector(getHeadlines)];
-    self.navigationItem.rightBarButtonItem = reloadScoops;
+    self.navigationItem.leftBarButtonItem = reloadScoops;
 }
 
 
@@ -162,7 +160,7 @@
     
     // Configurar
     // Sincronizar modelo (scoop) --> vista (celda)
-    cell.imageView.image = [UIImage imageWithData:scoop.image];
+    cell.imageView.image = scoop.image;
     cell.textLabel.text = scoop.title;
     cell.detailTextLabel.text = scoop.authorName;
     

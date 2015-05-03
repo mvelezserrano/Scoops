@@ -9,11 +9,13 @@
 @import UIKit;
 @class Scoop;
 
-@interface NewScoopViewController : UIViewController <UITextViewDelegate, UITextFieldDelegate>
+@interface NewScoopViewController : UIViewController <UITextViewDelegate, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIPopoverControllerDelegate>
 
 
 @property (weak, nonatomic) IBOutlet UITextField *scoopTitleView;
 @property (weak, nonatomic) IBOutlet UITextView *scoopTextView;
+@property (weak, nonatomic) IBOutlet UIImageView *scoopPhotoView;
+@property (strong, nonatomic) UIPopoverController *imagePickerPopover;
 
 - (id) initWithMSClient: (MSClient *) aClient authorName: (NSString *) anAuthorName;
 
