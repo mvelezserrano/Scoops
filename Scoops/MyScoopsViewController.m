@@ -96,7 +96,7 @@
         for (id item in items) {
             NSLog(@"item -> %@", item);
             Scoop *scoop = [[Scoop alloc] initWithTitle:item[@"title"]
-                                                  photo:nil
+                                                  image:nil
                                                    text:item[@"text"]
                                                authorId:item[@"authorId"]
                                              authorName:item[@"authorName"]

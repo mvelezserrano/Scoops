@@ -19,7 +19,7 @@
 @synthesize rating;
 
 - (id)initWithTitle:(NSString*)title
-              photo:(NSData *)img
+              image:(UIImage *)img
                text:(NSString*)aText
            authorId:(NSString *)anAuthorId
          authorName:(NSString *)anAuthorName
@@ -43,7 +43,7 @@
 }
 
 - (id)initWithTitle:(NSString*)title
-              photo:(NSData *)img
+              image:(UIImage *)img
                text:(NSString*)aText
            authorId:(NSString *)anAuthorId
          authorName:(NSString *)anAuthorName
