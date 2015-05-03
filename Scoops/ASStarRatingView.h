@@ -11,7 +11,7 @@
 #define kDefaultLeftMargin 5
 #define kDefaultMidMargin 5
 #define kDefaultRightMargin 5
-#define kDefaultMinAllowedRating 1
+#define kDefaultMinAllowedRating 0
 #define kDefaultMaxAllowedRating kDefaultMaxRating
 #define kDefaultMinStarSize CGSizeMake(5, 5)
 

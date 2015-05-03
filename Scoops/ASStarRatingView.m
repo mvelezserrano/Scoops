@@ -91,7 +91,7 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    NSLog(@"%f, %f, %f, %lu", self.frame.size.width, _leftMargin, _midMargin, (unsigned long)_starViews.count);
+    //NSLog(@"%f, %f, %f, %lu", self.frame.size.width, _leftMargin, _midMargin, (unsigned long)_starViews.count);
     float desiredImageWidth = (self.frame.size.width - (_leftMargin*2) - (_midMargin*_starViews.count)) / _starViews.count;
     float imageWidth = MAX(_minStarSize.width, desiredImageWidth);
     float imageHeight = MAX(_minStarSize.height, self.frame.size.height);

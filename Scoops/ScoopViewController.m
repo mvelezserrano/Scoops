@@ -7,17 +7,23 @@
 //
 
 #import <WindowsAzureMobileServices/WindowsAzureMobileServices.h>
+#import "AzureSession.h"
 #import "ScoopViewController.h"
+#import "ASStarRatingView.h"
 #import "Scoop.h"
 #import "Settings.h"
 
-@interface ScoopViewController ()
+@interface ScoopViewController () {
+    AzureSession *azureSession;
+}
 
 @property (nonatomic) int rating;
 
 @end
 
 @implementation ScoopViewController
+
+@synthesize actualRatingView;
 
 -(id) initWithScoop: (Scoop *) scoop {
     
@@ -38,11 +44,34 @@
 
 - (IBAction)sendRating:(id)sender {
     NSLog(@"Enviamos a Azure el nuevo rating: %d", self.rating);
+    
+    self.valorarButton.enabled = NO;
+    
+    MSClient *client = [azureSession client];
+    NSDictionary *parameters = @{@"idScoop" : self.model.id, @"newRating" : [NSNumber numberWithInt:self.rating]};
+    
+    [client invokeAPI:@"valoranoticia"
+                 body:nil
+           HTTPMethod:@"GET"
+           parameters:parameters
+              headers:nil
+           completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
+
+               if (!error) {
+                   
+                   //NSLog(@"resultado --> %@", result);
+                   NSLog(@"Api ha respondido");
+               }
+               
+               self.valorarButton.enabled = YES;
+           }];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    azureSession = [AzureSession sharedAzureSession];
     
     [self syncViewWithModel];
 }
@@ -56,6 +85,10 @@
 
 
 - (void) syncViewWithModel {
+    
+    actualRatingView.canEdit = NO;
+    actualRatingView.maxRating = 5;
+    actualRatingView.rating = self.model.rating;
     
     self.titleView.text = self.model.title;
     self.autorView.text = self.model.authorName;

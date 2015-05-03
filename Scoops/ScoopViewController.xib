@@ -6,9 +6,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ScoopViewController">
             <connections>
+                <outlet property="actualRatingView" destination="cQD-SU-Tox" id="0LL-HT-9SW"/>
                 <outlet property="autorView" destination="I8Q-0w-mVi" id="ts3-GY-HyM"/>
                 <outlet property="textView" destination="gEi-s1-akN" id="8c3-6s-IOr"/>
                 <outlet property="titleView" destination="Ekp-HQ-hkN" id="PdB-W9-8Aa"/>
+                <outlet property="valorarButton" destination="xl8-jj-Aps" id="RQw-KT-8LS"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -31,7 +33,7 @@
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Autor" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="I8Q-0w-mVi">
-                    <rect key="frame" x="25" y="105" width="325" height="21"/>
+                    <rect key="frame" x="25" y="105" width="154" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="15"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -53,6 +55,11 @@
                         <action selector="sendRating:" destination="-1" eventType="touchUpInside" id="fr6-9A-ePO"/>
                     </connections>
                 </button>
+                <view contentMode="scaleToFill" id="cQD-SU-Tox" customClass="ASStarRatingView">
+                    <rect key="frame" x="192" y="99" width="153" height="33"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.87675583960000003" green="0.87675583960000003" blue="0.87675583960000003" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
             </subviews>
             <color key="backgroundColor" red="0.87675583960000003" green="0.87675583960000003" blue="0.87675583960000003" alpha="1" colorSpace="calibratedRGB"/>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>

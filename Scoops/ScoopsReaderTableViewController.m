@@ -27,6 +27,11 @@
     [super viewDidLoad];
     self.title = @"Scoops Reader";
     azureSession = [AzureSession sharedAzureSession];
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    
+    [super viewWillAppear:animated];
     [self populateModelFromAzure];
 }
 
@@ -35,11 +40,13 @@
 - (void)populateModelFromAzure{
     
     self.scoops = [[NSMutableArray alloc] init];
+    [self.scoops removeAllObjects];
     
     MSClient *client = [azureSession client];
     
     MSTable *table = [client tableWithName:@"news"];
     MSQuery *queryModel = [[MSQuery alloc]initWithTable:table];
+    [queryModel orderByDescending:@"creationDate"];
     [queryModel readWithCompletion:^(NSArray *items, NSInteger totalCount, NSError *error) {
         for (id item in items) {
             NSLog(@"item -> %@", item);
@@ -52,6 +59,7 @@
                                                  status:[item[@"status"] integerValue]];
             [self.scoops addObject:scoop];
             scoop.id = item[@"id"];
+            scoop.rating = [item[@"valoracion"] integerValue];
         }
         [self.tableView reloadData];
     }];

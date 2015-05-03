@@ -20,6 +20,7 @@
 @property (nonatomic, strong) NSData *image;
 @property (nonatomic, strong) NSDate *creationDate;
 @property (nonatomic) int status;
+@property (nonatomic) int rating;
 
 - (id)initWithTitle:(NSString*)title
               photo:(NSData *)img

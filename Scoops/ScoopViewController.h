@@ -9,13 +9,16 @@
 #import <WindowsAzureMobileServices/WindowsAzureMobileServices.h>
 @import UIKit;
 @class Scoop;
+@class ASStarRatingView;
 
 @interface ScoopViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UILabel *titleView;
 @property (weak, nonatomic) IBOutlet UILabel *autorView;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
-@property (weak, nonatomic) IBOutlet UILabel *ratingLabel;
+@property (weak, nonatomic) IBOutlet UIButton *valorarButton;
+
+@property (weak, nonatomic) IBOutlet ASStarRatingView *actualRatingView;
 
 @property (strong, nonatomic) Scoop *model;
 

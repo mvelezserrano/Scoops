@@ -51,10 +51,20 @@
     
     self.titleView.text = self.model.title;
     self.textView.text = self.model.text;
+    
+    if (self.model.status == NOT_PUBLISHED) {
+        [self.publishSwitch setOn:NO];
+    } else {
+        [self.publishSwitch setOn:YES];
+    }
 }
 
 - (IBAction)publish:(id)sender {
-    self.model.status = PUBLISHED;
+    if ([sender isOn]) {
+        self.model.status = PENDING;
+    } else {
+        self.model.status = NOT_PUBLISHED;
+    }
     MSTable *table = [client tableWithName:@"news"];
     [table update:[self.model asDictionary] completion:^(NSDictionary *item, NSError *error) {
         if (error) {

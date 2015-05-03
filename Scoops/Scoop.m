@@ -16,7 +16,7 @@
 
 
 @implementation Scoop
-
+@synthesize rating;
 
 - (id)initWithTitle:(NSString*)title
               photo:(NSData *)img
