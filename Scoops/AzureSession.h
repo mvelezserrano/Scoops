@@ -20,7 +20,9 @@ typedef void (^completionWithURL)(NSURL *theUrl, NSError *error);
 @optional
 
 - (void) setProfilePicture:(NSURL *)profilePicture;
+- (void) setAuthorName: (NSString *)authorName;
 - (void) populateModelFromAzure;
+- (void) getHeadlines;
 
 @end
 

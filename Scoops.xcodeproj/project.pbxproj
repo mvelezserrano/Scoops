@@ -14,6 +14,9 @@
 		5575D4411AF4E5D100A16036 /* not_selected_star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5575D43B1AF4E5D100A16036 /* not_selected_star@2x.png */; };
 		5575D4421AF4E5D100A16036 /* selected_star.png in Resources */ = {isa = PBXBuildFile; fileRef = 5575D43C1AF4E5D100A16036 /* selected_star.png */; };
 		5575D4431AF4E5D100A16036 /* selected_star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5575D43D1AF4E5D100A16036 /* selected_star@2x.png */; };
+		5575D4451AF6793300A16036 /* take_photo.png in Resources */ = {isa = PBXBuildFile; fileRef = 5575D4441AF6793300A16036 /* take_photo.png */; };
+		5575D4541AF68BD400A16036 /* myScoops_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5575D4521AF68BD400A16036 /* myScoops_icon.png */; };
+		5575D4551AF68BD400A16036 /* reader_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5575D4531AF68BD400A16036 /* reader_icon.png */; };
 		55763FB61AF4DB5100CA174C /* ScoopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55763FB41AF4DB5100CA174C /* ScoopViewController.m */; };
 		55763FB71AF4DB5100CA174C /* ScoopViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55763FB51AF4DB5100CA174C /* ScoopViewController.xib */; };
 		55F3F8A61AEC009E00FE2900 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F3F8A51AEC009E00FE2900 /* main.m */; };
@@ -53,6 +56,9 @@
 		5575D43B1AF4E5D100A16036 /* not_selected_star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "not_selected_star@2x.png"; sourceTree = "<group>"; };
 		5575D43C1AF4E5D100A16036 /* selected_star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selected_star.png; sourceTree = "<group>"; };
 		5575D43D1AF4E5D100A16036 /* selected_star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selected_star@2x.png"; sourceTree = "<group>"; };
+		5575D4441AF6793300A16036 /* take_photo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = take_photo.png; sourceTree = "<group>"; };
+		5575D4521AF68BD400A16036 /* myScoops_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = myScoops_icon.png; sourceTree = "<group>"; };
+		5575D4531AF68BD400A16036 /* reader_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reader_icon.png; sourceTree = "<group>"; };
 		55763FB31AF4DB5100CA174C /* ScoopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoopViewController.h; sourceTree = "<group>"; };
 		55763FB41AF4DB5100CA174C /* ScoopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoopViewController.m; sourceTree = "<group>"; };
 		55763FB51AF4DB5100CA174C /* ScoopViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScoopViewController.xib; sourceTree = "<group>"; };
@@ -224,6 +230,9 @@
 		55F3F9901AF3A8D400FE2900 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5575D4521AF68BD400A16036 /* myScoops_icon.png */,
+				5575D4531AF68BD400A16036 /* reader_icon.png */,
+				5575D4441AF6793300A16036 /* take_photo.png */,
 				55F3F8DC1AECF93C00FE2900 /* Settings.h */,
 				5575D4331AF4E5B900A16036 /* ASStarRatingView */,
 			);
@@ -310,17 +319,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5575D4541AF68BD400A16036 /* myScoops_icon.png in Resources */,
 				5575D4401AF4E5D100A16036 /* not_selected_star.png in Resources */,
 				55F3F9531AED5A0700FE2900 /* MyScoopsViewController.xib in Resources */,
 				55F3F8DB1AECEB3800FE2900 /* NewScoopViewController.xib in Resources */,
 				55F3F8AE1AEC009E00FE2900 /* LaunchScreen.xib in Resources */,
 				55763FB71AF4DB5100CA174C /* ScoopViewController.xib in Resources */,
+				5575D4451AF6793300A16036 /* take_photo.png in Resources */,
 				5575D4411AF4E5D100A16036 /* not_selected_star@2x.png in Resources */,
 				5575D4421AF4E5D100A16036 /* selected_star.png in Resources */,
 				55F3F9871AF2A25A00FE2900 /* ScoopsReaderTableViewController.xib in Resources */,
 				5575D4431AF4E5D100A16036 /* selected_star@2x.png in Resources */,
 				5575D43E1AF4E5D100A16036 /* half_selected_star.png in Resources */,
 				55F3F8C71AEC08AD00FE2900 /* MyScoopViewController.xib in Resources */,
+				5575D4551AF68BD400A16036 /* reader_icon.png in Resources */,
 				55F3F8AB1AEC009E00FE2900 /* Images.xcassets in Resources */,
 				5575D43F1AF4E5D100A16036 /* half_selected_star@2x.png in Resources */,
 			);

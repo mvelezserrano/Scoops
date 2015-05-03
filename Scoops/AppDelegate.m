@@ -12,7 +12,7 @@
 #import "MyScoopViewController.h"
 #import "MyScoopsViewController.h"
 #import "NewScoopViewController.h"
-#import "sharedkeys.h"
+#import "Settings.h"
 #import "AzureSession.h"
 
 @interface AppDelegate ()
@@ -30,13 +30,16 @@
     
     ScoopsReaderTableViewController *scoopsReaderVC = [[ScoopsReaderTableViewController alloc] initWithStyle:UITableViewStylePlain];
     UINavigationController *scoopsReaderNavC = [[UINavigationController alloc] initWithRootViewController:scoopsReaderVC];
+    scoopsReaderNavC.tabBarItem.image = [UIImage imageNamed:@"reader_icon.png"];
     
     MyScoopsViewController *myScoopsVC = [[MyScoopsViewController alloc] init];
     session.delegate = myScoopsVC;
     UINavigationController *myScoopsNavC = [[UINavigationController alloc] initWithRootViewController:myScoopsVC];
+    myScoopsNavC.tabBarItem.image = [UIImage imageNamed:@"myScoops_icon.png"];
     
     UITabBarController *tb = [[UITabBarController alloc] init];
     [tb setViewControllers:@[scoopsReaderNavC, myScoopsNavC]];
+    
     
     self.window.rootViewController = tb;
     

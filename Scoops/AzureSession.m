@@ -12,6 +12,7 @@
 @interface AzureSession ()
 
 @property (strong, nonatomic) NSURL *profilePicture;
+@property (copy, nonatomic) NSString *authorName;
 
 @end
 
@@ -59,6 +60,7 @@
             //tenemos info extra del usuario
             NSLog(@"%@", result);
             self.profilePicture = [NSURL URLWithString:result[@"picture"][@"data"][@"url"]];
+            self.authorName = result[@"name"];
             [self notifyLoginSucceed];
         }];
         
@@ -82,6 +84,7 @@
                                //tenemos info extra del usuario
                                NSLog(@"%@", result);
                                self.profilePicture = [NSURL URLWithString:result[@"picture"][@"data"][@"url"]];
+                               self.authorName = result[@"name"];
                                [self notifyLoginSucceed];
                            }];
                            
@@ -103,7 +106,9 @@
     */
     // Avisamos tambien al delegado en caso de haberlo
     [self.delegate setProfilePicture:self.profilePicture];
-    [self.delegate populateModelFromAzure];
+    [self.delegate setAuthorName:self.authorName];
+    //[self.delegate populateModelFromAzure];
+    [self.delegate getHeadlines];
     
     
 }

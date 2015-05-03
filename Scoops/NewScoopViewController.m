@@ -43,6 +43,7 @@
     
     [super viewWillAppear:animated];
     // Alta en notificaciones del teclado
+    [self addPhotoButton];
     [self setupKeyboardNotifications];
 }
 
@@ -61,7 +62,7 @@
     MSTable *news = [client tableWithName:@"news"];
     
     Scoop *scoop = [[Scoop alloc] initWithTitle:self.scoopTitleView.text
-                                          image:nil
+                                          image:self.scoopPhotoView.image
                                            text:self.scoopTextView.text
                                        authorId:client.currentUser.userId
                                      authorName:self.authorName
@@ -83,6 +84,87 @@
           
       }];
 }
+
+
+- (void) addPhotoButton {
+    
+    // Add the new Scoop button
+    UIBarButtonItem *photoButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera
+                                                                                  target:self
+                                                                                  action:@selector(takePicture)];
+    self.navigationItem.rightBarButtonItem = photoButton;
+}
+
+
+- (void) takePicture {
+    
+    // Creamos un UIImagePickerController
+    UIImagePickerController *picker = [UIImagePickerController new];
+    
+    // Lo configuro
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        
+        // Uso la cámara
+        picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    } else {
+        
+        // Tiro del carrete
+        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    }
+    
+    picker.delegate = self;
+    
+    // Cambiamos la animación de entrada del picker
+    picker.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    
+    [self presentViewController:picker
+                       animated:YES
+                     completion:^{
+                         // Esto se va a ejecutar cuando termine la animación que
+                         // muestra al picker.
+                     }];
+}
+
+
+#pragma mark - UIImagePickerControllerDelegate
+
+-(void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    
+    // ¡OJO! Pico de memoria asegurado, especialmente en
+    // dispositivos antiguos: 4s, 5.
+    
+    // Sacamos la UIImage del diccionario
+    UIImage *img = [info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    // La guardo en el modelo
+    self.scoopPhotoView.image = img;
+    // Sincronizo modelo --> vista
+    //self.photoView.image = self.model.image;
+    
+    // Hay que quitar el controlador al que estamos presentando, una vez el usuario
+    // ha terminado.
+    
+    if (self.imagePickerPopover) {
+        [self.imagePickerPopover dismissPopoverAnimated:YES];
+        self.imagePickerPopover = nil;
+        NSLog(@"Dismiss del popover");
+    } else {
+        [self dismissViewControllerAnimated:YES
+                                 completion:^{
+                                     // Se ejecutará cuando se haya ocultado del todo
+                                     
+                                 }];
+    }
+    
+}
+
+
+#pragma mark - UIPopoverControllerDelegate
+-(void) popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
+    
+    self.imagePickerPopover = nil;
+}
+
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
     NSLog(@"Entramos a editar el texto");
@@ -153,7 +235,7 @@
                                 currentTextFrame.origin.y,
                                 currentTextFrame.size.width,
                                 currentTextFrame.size.height -
-                                kbdFrame.size.height+150);
+                                kbdFrame.size.height+100);
     
     
     
@@ -178,7 +260,7 @@
     // del teclado.
     [UIView animateWithDuration:duration
                      animations:^{
-                         self.scoopTextView.frame = CGRectMake(25, 127, 325, 375);
+                         self.scoopTextView.frame = CGRectMake(25, 304, 325, 257);
                      }];
 }
 

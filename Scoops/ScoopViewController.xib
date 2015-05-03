@@ -9,6 +9,7 @@
                 <outlet property="activityView" destination="PLC-Oz-QUP" id="n0U-3x-QHP"/>
                 <outlet property="actualRatingView" destination="cQD-SU-Tox" id="0LL-HT-9SW"/>
                 <outlet property="autorView" destination="I8Q-0w-mVi" id="ts3-GY-HyM"/>
+                <outlet property="scoopPhotoView" destination="vU8-Ih-a3k" id="Lcj-Ob-fst"/>
                 <outlet property="textView" destination="gEi-s1-akN" id="8c3-6s-IOr"/>
                 <outlet property="titleView" destination="Ekp-HQ-hkN" id="PdB-W9-8Aa"/>
                 <outlet property="valorarButton" destination="xl8-jj-Aps" id="RQw-KT-8LS"/>
@@ -28,7 +29,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" id="gEi-s1-akN">
-                    <rect key="frame" x="25" y="142" width="325" height="360"/>
+                    <rect key="frame" x="25" y="337" width="325" height="220"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -40,13 +41,8 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <view contentMode="scaleToFill" id="2yF-f7-7jm" customClass="ASStarRatingView">
-                    <rect key="frame" x="20" y="543" width="222" height="54"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" red="0.87675583960000003" green="0.87675583960000003" blue="0.87675583960000003" alpha="1" colorSpace="calibratedRGB"/>
-                </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="xl8-jj-Aps">
-                    <rect key="frame" x="267" y="555" width="71" height="30"/>
+                    <rect key="frame" x="267" y="570" width="71" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <state key="normal" title="Valorar">
@@ -66,6 +62,15 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="color" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                 </activityIndicatorView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="take_photo.png" id="vU8-Ih-a3k">
+                    <rect key="frame" x="25" y="140" width="325" height="184"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <view contentMode="scaleToFill" id="2yF-f7-7jm" customClass="ASStarRatingView">
+                    <rect key="frame" x="32" y="567" width="153" height="33"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.87675583960000003" green="0.87675583960000003" blue="0.87675583960000003" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
             </subviews>
             <color key="backgroundColor" red="0.87675583960000003" green="0.87675583960000003" blue="0.87675583960000003" alpha="1" colorSpace="calibratedRGB"/>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
@@ -74,6 +79,9 @@
             <point key="canvasLocation" x="599.5" y="554.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="take_photo.png" width="512" height="512"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
