@@ -69,6 +69,8 @@
     [queryModel readWithCompletion:^(NSArray *items, NSInteger totalCount, NSError *error) {
         id item = [items objectAtIndex:0];
         self.model.text = item[@"text"];
+        self.model.authorId = item[@"authorId"];
+        self.model.imageURL = [NSURL URLWithString:item[@"imageurl"]];
         self.model.coors = CLLocationCoordinate2DMake(0, 0);
         self.model.creationDate = item[@"creationDate"];
         self.model.status = [item[@"status"] integerValue];

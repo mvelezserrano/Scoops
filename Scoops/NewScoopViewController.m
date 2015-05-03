@@ -18,6 +18,7 @@
 @property (nonatomic, copy) NSString *authorName;
 @property (nonatomic, strong) NSURL *imageSasURL;
 @property (nonatomic, strong) NSURL *imageTempURL;
+@property (nonatomic, strong) UIImage *tinyImage;
 
 @end
 
@@ -189,6 +190,11 @@
     // Sacamos la UIImage del diccionario
     UIImage *img = [info objectForKey:UIImagePickerControllerOriginalImage];
     
+    /*
+    // Reducimos imagen.
+    self.tinyImage = [self imageWithImage:img
+                             scaledToSize:CGSizeMake(25.0, 25.0)];
+    */
     // La guardo en el modelo
     self.scoopPhotoView.image = img;
     // Sincronizo modelo --> vista
@@ -211,6 +217,15 @@
     
 }
 
+- (UIImage*)imageWithImage:(UIImage*)image
+              scaledToSize:(CGSize)newSize {
+    UIGraphicsBeginImageContext( newSize );
+    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+}
 
 #pragma mark - UIPopoverControllerDelegate
 -(void) popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {

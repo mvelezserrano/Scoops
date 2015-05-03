@@ -105,15 +105,20 @@
            parameters:nil
               headers:nil
            completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
-               for (id item in result) {
-                   Scoop *scoop = [[Scoop alloc] init];
-                   scoop.id = item[@"id"];
-                   scoop.title = item[@"title"];
-                   scoop.authorName = item[@"authorName"];
-                   scoop.downloaded = NO;
-                   [self.scoops addObject:scoop];
+               if ([result count]>0) {
+                   for (id item in result) {
+                       Scoop *scoop = [[Scoop alloc] init];
+                       scoop.id = item[@"id"];
+                       scoop.title = item[@"title"];
+                       scoop.authorName = item[@"authorName"];
+                       scoop.imageURL = item[@"imageurl"];
+                       scoop.downloaded = NO;
+                       [self.scoops addObject:scoop];
+                   }
+                   [self.tableView reloadData];
+               } else {
+                   [self.activityIndicator stopAnimating];
                }
-               [self.tableView reloadData];
     }];
 
 }
@@ -160,7 +165,34 @@
     
     // Configurar
     // Sincronizar modelo (scoop) --> vista (celda)
-    cell.imageView.image = scoop.image;
+    //cell.imageView.image = scoop.image;
+    
+    //[self downloadScoopImage: scoop.imageURL];
+    
+    NSLog(@"LastPathComponent: %@", [scoop.imageURL lastPathComponent]);
+    
+    MSClient *client = [azureSession client];
+    NSDictionary *parameters = @{@"containerName" : @"scoops",
+                                 @"blobName" : [scoop.imageURL lastPathComponent]};
+    
+    [client invokeAPI:@"getsasurlforblob" body:nil HTTPMethod:@"GET" parameters:parameters headers:nil completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
+        
+        if (!error) {
+            
+            NSURL *imageSasURL = [NSURL URLWithString:[result objectForKey:@"sasUrl"]];
+            [self handleSaSURLToDownload:imageSasURL
+                     completionHandleSaS:^(id result, NSError *error) {
+                         NSLog(@"Descarga del storage completa");
+                         scoop.image = result;
+                         cell.imageView.image = result;
+                         [cell setNeedsLayout];
+                     }];
+        } else {
+            NSLog(@"Error: %@", error);
+        }
+    }];
+    
+    
     cell.textLabel.text = scoop.title;
     cell.detailTextLabel.text = scoop.authorName;
     
@@ -169,6 +201,24 @@
 }
 
 
+- (void)handleSaSURLToDownload:(NSURL *)theUrl completionHandleSaS:(void (^)(id result, NSError *error))completion{
+    
+    NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:theUrl];
+    
+    [request setHTTPMethod:@"GET"];
+    [request setValue:@"image/jpeg" forHTTPHeaderField:@"Content-Type"];
+    
+    NSURLSessionDownloadTask * downloadTask = [[NSURLSession sharedSession]downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+        
+        if (!error) {
+            
+            UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:location]];
+            completion(image, error);
+        }
+    }];
+    [downloadTask resume];
+    
+}
 
 
 #pragma mark - Table view delegate
