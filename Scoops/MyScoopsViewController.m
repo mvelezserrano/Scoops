@@ -124,7 +124,7 @@
     
 }
 
-
+/*
 - (void)populateModelFromAzure{
     
     self.scoopsPublished = [[NSMutableArray alloc] init];
@@ -159,6 +159,7 @@
         [self.activityView stopAnimating];
     }];
 }
+*/
 
 -(void)setAuthorName:(NSString *)authorName {
     

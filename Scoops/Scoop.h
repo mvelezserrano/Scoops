@@ -19,6 +19,7 @@
 @property (nonatomic, copy) NSString *authorId;
 @property (nonatomic) CLLocationCoordinate2D coors;
 @property (nonatomic, strong) UIImage *image;
+@property (nonatomic, strong) NSURL *imageURL;
 @property (nonatomic, strong) NSDate *creationDate;
 @property (nonatomic) int status;
 @property (nonatomic) int rating;
@@ -26,6 +27,7 @@
 
 - (id)initWithTitle:(NSString*)title
               image:(UIImage *)img
+           imageURL:(NSURL *)url
                text:(NSString*)aText
            authorId:(NSString *)anAuthorId
          authorName:(NSString *)anAuthorName
@@ -33,6 +35,7 @@
 
 - (id)initWithTitle:(NSString*)title
               image:(UIImage *)img
+           imageURL:(NSURL *)url
                text:(NSString*)aText
            authorId:(NSString *)anAuthorId
          authorName:(NSString *)anAuthorName

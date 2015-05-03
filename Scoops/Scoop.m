@@ -20,6 +20,7 @@
 
 - (id)initWithTitle:(NSString*)title
               image:(UIImage *)img
+           imageURL:(NSURL *)url
                text:(NSString*)aText
            authorId:(NSString *)anAuthorId
          authorName:(NSString *)anAuthorName
@@ -28,6 +29,7 @@
     if (self = [super init]) {
         _title = title;
         _image = img;
+        _imageURL = url;
         _text = aText;
         _authorId = anAuthorId;
         _authorName = anAuthorName;
@@ -44,6 +46,7 @@
 
 - (id)initWithTitle:(NSString*)title
               image:(UIImage *)img
+           imageURL:(NSURL *)url
                text:(NSString*)aText
            authorId:(NSString *)anAuthorId
          authorName:(NSString *)anAuthorName
@@ -53,6 +56,7 @@
     if (self = [super init]) {
         _title = title;
         _image = img;
+        _imageURL = url;
         _text = aText;
         _authorId = anAuthorId;
         _authorName = anAuthorName;
@@ -75,7 +79,9 @@
              @"authorId"     : self.authorId,
              @"authorName" : self.authorName,
              @"coors"      : @"",
-             //@"image"      : self.image,
+             @"imageUrl"      : [NSString stringWithContentsOfURL:self.imageURL
+                                                         encoding:NSUTF8StringEncoding
+                                                            error:nil],
              @"creationDate"    : self.creationDate,
              @"status"     : [NSNumber numberWithInt:self.status]};
 }
@@ -87,7 +93,7 @@
              @"authorId"     : self.authorId,
              @"authorName" : self.authorName,
              @"coors"      : @"",
-             //@"image"      : self.image,
+             @"imageUrl"      : @"",//[self.imageURL absoluteString],
              @"creationDate"    : self.creationDate,
              @"status"     : [NSNumber numberWithInt:self.status]};
 }
