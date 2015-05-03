@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ScoopViewController">
             <connections>
+                <outlet property="activityView" destination="PLC-Oz-QUP" id="n0U-3x-QHP"/>
                 <outlet property="actualRatingView" destination="cQD-SU-Tox" id="0LL-HT-9SW"/>
                 <outlet property="autorView" destination="I8Q-0w-mVi" id="ts3-GY-HyM"/>
                 <outlet property="textView" destination="gEi-s1-akN" id="8c3-6s-IOr"/>
@@ -60,6 +61,11 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.87675583960000003" green="0.87675583960000003" blue="0.87675583960000003" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" id="PLC-Oz-QUP">
+                    <rect key="frame" x="169" y="315" width="37" height="37"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="color" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" red="0.87675583960000003" green="0.87675583960000003" blue="0.87675583960000003" alpha="1" colorSpace="calibratedRGB"/>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>

@@ -22,22 +22,37 @@
 
 @implementation ScoopsReaderTableViewController
 
+- (id) initWithStyle:(UITableViewStyle)style {
+    
+    if (self = [super initWithStyle:style]) {
+        self.title = @"Scoops Reader";
+        azureSession = [AzureSession sharedAzureSession];
+        [self getHeadlines];
+    }
+    
+    return self;
+}
 
+/*
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"Scoops Reader";
     azureSession = [AzureSession sharedAzureSession];
+    [self getHeadlines];
 }
+*/
 
 - (void) viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
-    [self populateModelFromAzure];
+    //[self populateModelFromAzure];
+    //[self getHeadlines];
+    [self addReloadScoopsButton];
 }
 
 
 #pragma mark - modelo
-- (void)populateModelFromAzure{
+/*- (void)populateModelFromAzure{
     
     self.scoops = [[NSMutableArray alloc] init];
     [self.scoops removeAllObjects];
@@ -64,7 +79,45 @@
         [self.tableView reloadData];
     }];
 }
+*/
 
+- (void) getHeadlines {
+    
+    NSLog(@"Descargamos cabeceras");
+    
+    self.scoops = [[NSMutableArray alloc] init];
+    [self.scoops removeAllObjects];
+    
+    MSClient *client = [azureSession client];
+    
+    [client invokeAPI:@"getheadlines"
+                 body:nil
+           HTTPMethod:@"GET"
+           parameters:nil
+              headers:nil
+           completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
+               for (id item in result) {
+                   Scoop *scoop = [[Scoop alloc] init];
+                   scoop.id = item[@"id"];
+                   scoop.title = item[@"title"];
+                   scoop.authorName = item[@"authorName"];
+                   scoop.downloaded = NO;
+                   [self.scoops addObject:scoop];
+               }
+               [self.tableView reloadData];
+    }];
+
+}
+
+
+- (void) addReloadScoopsButton {
+    
+    // Add the new Scoop button
+    UIBarButtonItem *reloadScoops = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
+                                                                              target:self
+                                                                              action:@selector(getHeadlines)];
+    self.navigationItem.rightBarButtonItem = reloadScoops;
+}
 
 
 #pragma mark - Table view data source

@@ -35,6 +35,7 @@
         
         _creationDate = [NSDate date];
         _status = NOT_PUBLISHED;
+        _downloaded = NO;
     }
     
     return self;
@@ -59,6 +60,7 @@
         
         _creationDate = [NSDate date];
         _status = aStatus;
+        _downloaded = NO;
     }
     
     return self;

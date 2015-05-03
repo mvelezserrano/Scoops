@@ -29,9 +29,10 @@
     
     if (self = [super initWithNibName:nil bundle:nil]) {
         
+        azureSession = [AzureSession sharedAzureSession];
         _model = scoop;
         
-        // Alta en notificación de cambio de status favorito.
+        // Alta en notificación de cambio de rating.
         NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
         [nc addObserver:self
                selector:@selector(setNewRating:)
@@ -40,6 +41,38 @@
     }
     
     return self;
+}
+
+- (void) viewDidLoad {
+    
+    [super viewDidLoad];
+    
+    if (self.model.downloaded == NO) {
+        [self downloadScoop];
+    } else {
+        [self syncViewWithModel];
+    }
+}
+
+- (void) downloadScoop {
+    NSLog(@"Entramos a downloadScoop");
+    MSClient *client = [azureSession client];
+    
+    MSTable *table = [client tableWithName:@"news"];
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"id == %@", self.model.id];
+    MSQuery *queryModel = [table queryWithPredicate: predicate];
+    [queryModel readWithCompletion:^(NSArray *items, NSInteger totalCount, NSError *error) {
+        id item = [items objectAtIndex:0];
+        self.model.text = item[@"text"];
+        self.model.coors = CLLocationCoordinate2DMake(0, 0);
+        self.model.creationDate = item[@"creationDate"];
+        self.model.status = [item[@"status"] integerValue];
+        self.model.rating = [item[@"valoracion"] integerValue];
+        self.model.downloaded = YES;
+        
+        [self syncViewWithModel];
+    }];
+
 }
 
 - (IBAction)sendRating:(id)sender {
@@ -67,15 +100,6 @@
            }];
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-    
-    azureSession = [AzureSession sharedAzureSession];
-    
-    [self syncViewWithModel];
-}
-
 - (void) dealloc {
     
     // Me doy de baja de las notificaciones
@@ -85,7 +109,7 @@
 
 
 - (void) syncViewWithModel {
-    
+    NSLog(@"Entramos a syncViewWithModel");
     actualRatingView.canEdit = NO;
     actualRatingView.maxRating = 5;
     actualRatingView.rating = self.model.rating;
@@ -93,6 +117,7 @@
     self.titleView.text = self.model.title;
     self.autorView.text = self.model.authorName;
     self.textView.text = self.model.text;
+    [self.activityView stopAnimating];
 }
 
 - (void) setNewRating: (NSNotification *) notification {

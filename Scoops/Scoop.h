@@ -21,6 +21,7 @@
 @property (nonatomic, strong) NSDate *creationDate;
 @property (nonatomic) int status;
 @property (nonatomic) int rating;
+@property (nonatomic) BOOL downloaded;
 
 - (id)initWithTitle:(NSString*)title
               photo:(NSData *)img
