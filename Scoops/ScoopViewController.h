@@ -11,17 +11,19 @@
 @class Scoop;
 @class ASStarRatingView;
 
-@interface MyScoopViewController : UIViewController
+@interface ScoopViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UILabel *titleView;
-@property (weak, nonatomic) IBOutlet ASStarRatingView *actualRatingView;
+@property (weak, nonatomic) IBOutlet UILabel *autorView;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
-@property (weak, nonatomic) IBOutlet UILabel *publishLabel;
-@property (weak, nonatomic) IBOutlet UISwitch *publishSwitch;
+@property (weak, nonatomic) IBOutlet UIButton *valorarButton;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityView;
+
+@property (weak, nonatomic) IBOutlet ASStarRatingView *actualRatingView;
 
 @property (strong, nonatomic) Scoop *model;
 
--(id) initWithScoop: (Scoop *) scoop client: (MSClient *) aClient;
+-(id) initWithScoop: (Scoop *) scoop;
 
-- (IBAction)publish:(id)sender;
+- (IBAction)sendRating:(id)sender;
 @end

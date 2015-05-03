@@ -8,16 +8,21 @@
 
 #import <WindowsAzureMobileServices/WindowsAzureMobileServices.h>
 #import "MyScoopViewController.h"
+#import "ASStarRatingView.h"
 #import "Scoop.h"
-#import "sharedkeys.h"
+#import "Settings.h"
 
 @interface MyScoopViewController () {
     MSClient *client;
 }
 
+@property (nonatomic) int actualRating;
+
 @end
 
 @implementation MyScoopViewController
+
+@synthesize actualRatingView;
 
 -(id) initWithScoop: (Scoop *) scoop client: (MSClient *) aClient {
     
@@ -49,12 +54,26 @@
 
 - (void) syncViewWithModel {
     
+    actualRatingView.canEdit = NO;
+    actualRatingView.maxRating = 5;
+    actualRatingView.rating = self.model.rating;
+    
     self.titleView.text = self.model.title;
     self.textView.text = self.model.text;
+    
+    if (self.model.status == NOT_PUBLISHED) {
+        [self.publishSwitch setOn:NO];
+    } else {
+        [self.publishSwitch setOn:YES];
+    }
 }
 
 - (IBAction)publish:(id)sender {
-    self.model.status = PUBLISHED;
+    if ([sender isOn]) {
+        self.model.status = PENDING;
+    } else {
+        self.model.status = NOT_PUBLISHED;
+    }
     MSTable *table = [client tableWithName:@"news"];
     [table update:[self.model asDictionary] completion:^(NSDictionary *item, NSError *error) {
         if (error) {

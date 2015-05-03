@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5575D4371AF4E5C900A16036 /* ASStarRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5575D4361AF4E5C900A16036 /* ASStarRatingView.m */; };
+		5575D43E1AF4E5D100A16036 /* half_selected_star.png in Resources */ = {isa = PBXBuildFile; fileRef = 5575D4381AF4E5D100A16036 /* half_selected_star.png */; };
+		5575D43F1AF4E5D100A16036 /* half_selected_star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5575D4391AF4E5D100A16036 /* half_selected_star@2x.png */; };
+		5575D4401AF4E5D100A16036 /* not_selected_star.png in Resources */ = {isa = PBXBuildFile; fileRef = 5575D43A1AF4E5D100A16036 /* not_selected_star.png */; };
+		5575D4411AF4E5D100A16036 /* not_selected_star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5575D43B1AF4E5D100A16036 /* not_selected_star@2x.png */; };
+		5575D4421AF4E5D100A16036 /* selected_star.png in Resources */ = {isa = PBXBuildFile; fileRef = 5575D43C1AF4E5D100A16036 /* selected_star.png */; };
+		5575D4431AF4E5D100A16036 /* selected_star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5575D43D1AF4E5D100A16036 /* selected_star@2x.png */; };
+		55763FB61AF4DB5100CA174C /* ScoopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55763FB41AF4DB5100CA174C /* ScoopViewController.m */; };
+		55763FB71AF4DB5100CA174C /* ScoopViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55763FB51AF4DB5100CA174C /* ScoopViewController.xib */; };
 		55F3F8A61AEC009E00FE2900 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F3F8A51AEC009E00FE2900 /* main.m */; };
 		55F3F8A91AEC009E00FE2900 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F3F8A81AEC009E00FE2900 /* AppDelegate.m */; };
 		55F3F8AB1AEC009E00FE2900 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55F3F8AA1AEC009E00FE2900 /* Images.xcassets */; };
@@ -36,6 +45,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5575D4351AF4E5C900A16036 /* ASStarRatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASStarRatingView.h; sourceTree = "<group>"; };
+		5575D4361AF4E5C900A16036 /* ASStarRatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASStarRatingView.m; sourceTree = "<group>"; };
+		5575D4381AF4E5D100A16036 /* half_selected_star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = half_selected_star.png; sourceTree = "<group>"; };
+		5575D4391AF4E5D100A16036 /* half_selected_star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "half_selected_star@2x.png"; sourceTree = "<group>"; };
+		5575D43A1AF4E5D100A16036 /* not_selected_star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = not_selected_star.png; sourceTree = "<group>"; };
+		5575D43B1AF4E5D100A16036 /* not_selected_star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "not_selected_star@2x.png"; sourceTree = "<group>"; };
+		5575D43C1AF4E5D100A16036 /* selected_star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selected_star.png; sourceTree = "<group>"; };
+		5575D43D1AF4E5D100A16036 /* selected_star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selected_star@2x.png"; sourceTree = "<group>"; };
+		55763FB31AF4DB5100CA174C /* ScoopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoopViewController.h; sourceTree = "<group>"; };
+		55763FB41AF4DB5100CA174C /* ScoopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoopViewController.m; sourceTree = "<group>"; };
+		55763FB51AF4DB5100CA174C /* ScoopViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScoopViewController.xib; sourceTree = "<group>"; };
 		55F3F8A01AEC009E00FE2900 /* Scoops.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scoops.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55F3F8A41AEC009E00FE2900 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		55F3F8A51AEC009E00FE2900 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -54,7 +74,7 @@
 		55F3F8D71AECEB3800FE2900 /* NewScoopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewScoopViewController.h; sourceTree = "<group>"; };
 		55F3F8D81AECEB3800FE2900 /* NewScoopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewScoopViewController.m; sourceTree = "<group>"; };
 		55F3F8D91AECEB3800FE2900 /* NewScoopViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewScoopViewController.xib; sourceTree = "<group>"; };
-		55F3F8DC1AECF93C00FE2900 /* sharedkeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sharedkeys.h; sourceTree = "<group>"; };
+		55F3F8DC1AECF93C00FE2900 /* Settings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
 		55F3F8DD1AECFB5300FE2900 /* WindowsAzureMobileServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WindowsAzureMobileServices.framework; sourceTree = "<group>"; };
 		55F3F94F1AED5A0700FE2900 /* MyScoopsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyScoopsViewController.h; sourceTree = "<group>"; };
 		55F3F9501AED5A0700FE2900 /* MyScoopsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyScoopsViewController.m; sourceTree = "<group>"; };
@@ -85,6 +105,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5575D4331AF4E5B900A16036 /* ASStarRatingView */ = {
+			isa = PBXGroup;
+			children = (
+				5575D4351AF4E5C900A16036 /* ASStarRatingView.h */,
+				5575D4361AF4E5C900A16036 /* ASStarRatingView.m */,
+				5575D4341AF4E5C000A16036 /* stars */,
+			);
+			name = ASStarRatingView;
+			sourceTree = "<group>";
+		};
+		5575D4341AF4E5C000A16036 /* stars */ = {
+			isa = PBXGroup;
+			children = (
+				5575D4381AF4E5D100A16036 /* half_selected_star.png */,
+				5575D4391AF4E5D100A16036 /* half_selected_star@2x.png */,
+				5575D43A1AF4E5D100A16036 /* not_selected_star.png */,
+				5575D43B1AF4E5D100A16036 /* not_selected_star@2x.png */,
+				5575D43C1AF4E5D100A16036 /* selected_star.png */,
+				5575D43D1AF4E5D100A16036 /* selected_star@2x.png */,
+			);
+			name = stars;
+			sourceTree = "<group>";
+		};
 		55F3F8971AEC009E00FE2900 = {
 			isa = PBXGroup;
 			children = (
@@ -108,7 +151,6 @@
 			isa = PBXGroup;
 			children = (
 				55F3F9901AF3A8D400FE2900 /* Resources */,
-				55F3F8DC1AECF93C00FE2900 /* sharedkeys.h */,
 				55F3F8CC1AEC0B9E00FE2900 /* Model */,
 				55F3F8C81AEC08B300FE2900 /* Controllers */,
 				55F3F8A71AEC009E00FE2900 /* AppDelegate.h */,
@@ -152,6 +194,9 @@
 				55F3F9831AF2A25A00FE2900 /* ScoopsReaderTableViewController.h */,
 				55F3F9841AF2A25A00FE2900 /* ScoopsReaderTableViewController.m */,
 				55F3F9851AF2A25A00FE2900 /* ScoopsReaderTableViewController.xib */,
+				55763FB31AF4DB5100CA174C /* ScoopViewController.h */,
+				55763FB41AF4DB5100CA174C /* ScoopViewController.m */,
+				55763FB51AF4DB5100CA174C /* ScoopViewController.xib */,
 				55F3F94F1AED5A0700FE2900 /* MyScoopsViewController.h */,
 				55F3F9501AED5A0700FE2900 /* MyScoopsViewController.m */,
 				55F3F9511AED5A0700FE2900 /* MyScoopsViewController.xib */,
@@ -179,6 +224,8 @@
 		55F3F9901AF3A8D400FE2900 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				55F3F8DC1AECF93C00FE2900 /* Settings.h */,
+				5575D4331AF4E5B900A16036 /* ASStarRatingView */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -263,12 +310,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5575D4401AF4E5D100A16036 /* not_selected_star.png in Resources */,
 				55F3F9531AED5A0700FE2900 /* MyScoopsViewController.xib in Resources */,
 				55F3F8DB1AECEB3800FE2900 /* NewScoopViewController.xib in Resources */,
 				55F3F8AE1AEC009E00FE2900 /* LaunchScreen.xib in Resources */,
+				55763FB71AF4DB5100CA174C /* ScoopViewController.xib in Resources */,
+				5575D4411AF4E5D100A16036 /* not_selected_star@2x.png in Resources */,
+				5575D4421AF4E5D100A16036 /* selected_star.png in Resources */,
 				55F3F9871AF2A25A00FE2900 /* ScoopsReaderTableViewController.xib in Resources */,
+				5575D4431AF4E5D100A16036 /* selected_star@2x.png in Resources */,
+				5575D43E1AF4E5D100A16036 /* half_selected_star.png in Resources */,
 				55F3F8C71AEC08AD00FE2900 /* MyScoopViewController.xib in Resources */,
 				55F3F8AB1AEC009E00FE2900 /* Images.xcassets in Resources */,
+				5575D43F1AF4E5D100A16036 /* half_selected_star@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,6 +345,8 @@
 				55F3F8A91AEC009E00FE2900 /* AppDelegate.m in Sources */,
 				55F3F8DA1AECEB3800FE2900 /* NewScoopViewController.m in Sources */,
 				55F3F8A61AEC009E00FE2900 /* main.m in Sources */,
+				5575D4371AF4E5C900A16036 /* ASStarRatingView.m in Sources */,
+				55763FB61AF4DB5100CA174C /* ScoopViewController.m in Sources */,
 				55F3F8CB1AEC0B9A00FE2900 /* Scoop.m in Sources */,
 				55F3F8C61AEC08AD00FE2900 /* MyScoopViewController.m in Sources */,
 				55F3F9861AF2A25A00FE2900 /* ScoopsReaderTableViewController.m in Sources */,
@@ -488,6 +544,7 @@
 				55F3F8BF1AEC009F00FE2900 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		55F3F8C01AEC009F00FE2900 /* Build configuration list for PBXNativeTarget "ScoopsTests" */ = {
 			isa = XCConfigurationList;
@@ -496,6 +553,7 @@
 				55F3F8C21AEC009F00FE2900 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

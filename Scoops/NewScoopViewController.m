@@ -9,7 +9,7 @@
 #import <WindowsAzureMobileServices/WindowsAzureMobileServices.h>
 #import "NewScoopViewController.h"
 #import "Scoop.h"
-#import "sharedkeys.h"
+#import "Settings.h"
 
 @interface NewScoopViewController () {
     MSClient *client;
@@ -61,7 +61,7 @@
     MSTable *news = [client tableWithName:@"news"];
     
     Scoop *scoop = [[Scoop alloc] initWithTitle:self.scoopTitleView.text
-                                          photo:nil
+                                          image:nil
                                            text:self.scoopTextView.text
                                        authorId:client.currentUser.userId
                                      authorName:self.authorName

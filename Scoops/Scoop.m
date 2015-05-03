@@ -7,7 +7,7 @@
 //
 
 #import "Scoop.h"
-#import "sharedkeys.h"
+#import "Settings.h"
 
 
 @interface Scoop ()
@@ -16,10 +16,10 @@
 
 
 @implementation Scoop
-
+@synthesize rating;
 
 - (id)initWithTitle:(NSString*)title
-              photo:(NSData *)img
+              image:(UIImage *)img
                text:(NSString*)aText
            authorId:(NSString *)anAuthorId
          authorName:(NSString *)anAuthorName
@@ -35,6 +35,7 @@
         
         _creationDate = [NSDate date];
         _status = NOT_PUBLISHED;
+        _downloaded = NO;
     }
     
     return self;
@@ -42,7 +43,7 @@
 }
 
 - (id)initWithTitle:(NSString*)title
-              photo:(NSData *)img
+              image:(UIImage *)img
                text:(NSString*)aText
            authorId:(NSString *)anAuthorId
          authorName:(NSString *)anAuthorName
@@ -59,6 +60,7 @@
         
         _creationDate = [NSDate date];
         _status = aStatus;
+        _downloaded = NO;
     }
     
     return self;

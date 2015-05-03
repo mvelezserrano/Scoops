@@ -8,6 +8,7 @@
 
 #import "ScoopsReaderTableViewController.h"
 #import "Scoop.h"
+#import "ScoopViewController.h"
 #import "AzureSession.h"
 
 @interface ScoopsReaderTableViewController () {
@@ -21,24 +22,57 @@
 
 @implementation ScoopsReaderTableViewController
 
+@synthesize activityIndicator;
 
+- (id) initWithStyle:(UITableViewStyle)style {
+    
+    if (self = [super initWithStyle:style]) {
+        self.title = @"Scoops Reader";
+        azureSession = [AzureSession sharedAzureSession];
+        [self getHeadlines];
+    }
+    
+    return self;
+}
+
+/*
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"Scoops Reader";
     azureSession = [AzureSession sharedAzureSession];
-    [self populateModelFromAzure];
+    [self getHeadlines];
+}
+*/
+
+-(void)loadView {
+    [super loadView];
+    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    self.activityIndicator.color = [UIColor darkGrayColor];
+    [self.view addSubview:self.activityIndicator];
+    self.activityIndicator.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2);
+    [self.activityIndicator startAnimating];
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    
+    [super viewWillAppear:animated];
+    //[self populateModelFromAzure];
+    //[self getHeadlines];
+    [self addReloadScoopsButton];
 }
 
 
 #pragma mark - modelo
-- (void)populateModelFromAzure{
+/*- (void)populateModelFromAzure{
     
     self.scoops = [[NSMutableArray alloc] init];
+    [self.scoops removeAllObjects];
     
     MSClient *client = [azureSession client];
     
     MSTable *table = [client tableWithName:@"news"];
     MSQuery *queryModel = [[MSQuery alloc]initWithTable:table];
+    [queryModel orderByDescending:@"creationDate"];
     [queryModel readWithCompletion:^(NSArray *items, NSInteger totalCount, NSError *error) {
         for (id item in items) {
             NSLog(@"item -> %@", item);
@@ -51,11 +85,50 @@
                                                  status:[item[@"status"] integerValue]];
             [self.scoops addObject:scoop];
             scoop.id = item[@"id"];
+            scoop.rating = [item[@"valoracion"] integerValue];
         }
         [self.tableView reloadData];
     }];
 }
+*/
 
+- (void) getHeadlines {
+    
+    NSLog(@"Descargamos cabeceras");
+    
+    self.scoops = [[NSMutableArray alloc] init];
+    [self.scoops removeAllObjects];
+    
+    MSClient *client = [azureSession client];
+    
+    [client invokeAPI:@"getheadlines"
+                 body:nil
+           HTTPMethod:@"GET"
+           parameters:nil
+              headers:nil
+           completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
+               for (id item in result) {
+                   Scoop *scoop = [[Scoop alloc] init];
+                   scoop.id = item[@"id"];
+                   scoop.title = item[@"title"];
+                   scoop.authorName = item[@"authorName"];
+                   scoop.downloaded = NO;
+                   [self.scoops addObject:scoop];
+               }
+               [self.tableView reloadData];
+    }];
+
+}
+
+
+- (void) addReloadScoopsButton {
+    
+    // Add the new Scoop button
+    UIBarButtonItem *reloadScoops = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
+                                                                              target:self
+                                                                              action:@selector(getHeadlines)];
+    self.navigationItem.rightBarButtonItem = reloadScoops;
+}
 
 
 #pragma mark - Table view data source
@@ -99,21 +172,27 @@
 
 
 
-/*
+
 #pragma mark - Table view delegate
 
 // In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Navigation logic may go here, for example:
-    // Create the next view controller.
-    <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:<#@"Nib name"#> bundle:nil];
     
-    // Pass the selected object to the new view controller.
+    // Averiguar el scoop
+    Scoop *scoop = scoop = [self.scoops objectAtIndex:indexPath.row];
     
-    // Push the view controller.
-    [self.navigationController pushViewController:detailViewController animated:YES];
+    ScoopViewController *sVC = [[ScoopViewController alloc] initWithScoop:scoop];
+    [self.navigationController pushViewController:sVC animated:YES];
 }
-*/
+
+
+-(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if([indexPath row] == ((NSIndexPath*)[[tableView indexPathsForVisibleRows] lastObject]).row){
+        [self.activityIndicator stopAnimating];
+    }
+}
+
 
 
 @end
