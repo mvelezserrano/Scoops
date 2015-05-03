@@ -16,6 +16,8 @@
 @property (weak, nonatomic) IBOutlet UITextView *scoopTextView;
 @property (weak, nonatomic) IBOutlet UIImageView *scoopPhotoView;
 @property (strong, nonatomic) UIPopoverController *imagePickerPopover;
+@property (weak, nonatomic) IBOutlet UIButton *sendScoopButton;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityView;
 
 - (id) initWithMSClient: (MSClient *) aClient authorName: (NSString *) anAuthorName;
 

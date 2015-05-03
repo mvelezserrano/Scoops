@@ -36,30 +36,32 @@
 }
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
     
+    [super viewDidLoad];
     self.scoopTextView.delegate = self;
 }
 
 - (void) viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
-    // Alta en notificaciones del teclado
+    [self.activityView stopAnimating];
     [self addPhotoButton];
+    // Alta en notificaciones del teclado
     [self setupKeyboardNotifications];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
     
     [super viewWillDisappear:animated];
-    
     // Baja en notificaciones
     [self tearDownKeyboardNotifications];
 }
 
 
 - (IBAction)sendScoop:(id)sender {
+    
+    self.sendScoopButton.enabled = NO;
+    [self.activityView startAnimating];
     
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
     [format setDateFormat:@"yyyyMMdd_HHmmss"];
@@ -82,9 +84,12 @@
             [self handleImageToUploadAzureBlob:self.imageSasURL
                                        blobImg:self.scoopPhotoView.image
                           completionUploadTask:^(id result, NSError *error) {
-                              
+                              //NSLog(@"Tarea de subida finalizada!!!");
+                              dispatch_async(dispatch_get_main_queue(), ^{
+                                  [self uploadScoop];
+                              });
                           }];
-            [self uploadScoop];
+            //[self uploadScoop];
         } else {
             NSLog(@"Error: %@", error);
         }
@@ -112,8 +117,9 @@
           if (error) {
               NSLog(@"Error %@", error);
           } else {
-              NSLog(@"INSERCIÓN DE NOTICIA EN AZURE OK!!!");
+              //NSLog(@"INSERCIÓN DE NOTICIA EN AZURE OK!!!");
               scoop.id = item[@"id"];
+              [self.activityView stopAnimating];
               [self.navigationController popViewControllerAnimated:YES];
           }
       }];
@@ -132,7 +138,8 @@
     NSURLSessionUploadTask *uploadTask = [[NSURLSession sharedSession] uploadTaskWithRequest:request fromData:data completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         if (!error) {
-            NSLog(@"Tarea de subida finalizada!!!");
+            //NSLog(@"Tarea de subida finalizada!!!");
+            completion(data, error);
         }
         
     }];
@@ -206,7 +213,7 @@
     if (self.imagePickerPopover) {
         [self.imagePickerPopover dismissPopoverAnimated:YES];
         self.imagePickerPopover = nil;
-        NSLog(@"Dismiss del popover");
+        //NSLog(@"Dismiss del popover");
     } else {
         [self dismissViewControllerAnimated:YES
                                  completion:^{

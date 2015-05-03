@@ -35,21 +35,12 @@
     return self;
 }
 
-/*
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    self.title = @"Scoops Reader";
-    azureSession = [AzureSession sharedAzureSession];
-    [self getHeadlines];
-}
-*/
-
 -(void)loadView {
     [super loadView];
     self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     self.activityIndicator.color = [UIColor darkGrayColor];
     [self.view addSubview:self.activityIndicator];
-    self.activityIndicator.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2);
+    self.activityIndicator.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2 - 50);
     [self.activityIndicator startAnimating];
 }
 
@@ -63,34 +54,6 @@
 
 
 #pragma mark - modelo
-/*- (void)populateModelFromAzure{
-    
-    self.scoops = [[NSMutableArray alloc] init];
-    [self.scoops removeAllObjects];
-    
-    MSClient *client = [azureSession client];
-    
-    MSTable *table = [client tableWithName:@"news"];
-    MSQuery *queryModel = [[MSQuery alloc]initWithTable:table];
-    [queryModel orderByDescending:@"creationDate"];
-    [queryModel readWithCompletion:^(NSArray *items, NSInteger totalCount, NSError *error) {
-        for (id item in items) {
-            NSLog(@"item -> %@", item);
-            Scoop *scoop = [[Scoop alloc] initWithTitle:item[@"title"]
-                                                  photo:nil
-                                                   text:item[@"text"]
-                                               authorId:item[@"authorId"]
-                                             authorName:item[@"authorName"]
-                                                  coors:CLLocationCoordinate2DMake(0, 0)
-                                                 status:[item[@"status"] integerValue]];
-            [self.scoops addObject:scoop];
-            scoop.id = item[@"id"];
-            scoop.rating = [item[@"valoracion"] integerValue];
-        }
-        [self.tableView reloadData];
-    }];
-}
-*/
 
 - (void) getHeadlines {
     
@@ -165,33 +128,34 @@
     
     // Configurar
     // Sincronizar modelo (scoop) --> vista (celda)
-    //cell.imageView.image = scoop.image;
     
-    //[self downloadScoopImage: scoop.imageURL];
-    
-    NSLog(@"LastPathComponent: %@", [scoop.imageURL lastPathComponent]);
-    
-    MSClient *client = [azureSession client];
-    NSDictionary *parameters = @{@"containerName" : @"scoops",
-                                 @"blobName" : [scoop.imageURL lastPathComponent]};
-    
-    [client invokeAPI:@"getsasurlforblob" body:nil HTTPMethod:@"GET" parameters:parameters headers:nil completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
+    if (scoop.imageDownloaded) {
+        cell.imageView.image = scoop.image;
+    } else {
         
-        if (!error) {
+        MSClient *client = [azureSession client];
+        NSDictionary *parameters = @{@"containerName" : @"scoops",
+                                     @"blobName" : [scoop.imageURL lastPathComponent]};
+        
+        [client invokeAPI:@"getsasurlforblob" body:nil HTTPMethod:@"GET" parameters:parameters headers:nil completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
             
-            NSURL *imageSasURL = [NSURL URLWithString:[result objectForKey:@"sasUrl"]];
-            [self handleSaSURLToDownload:imageSasURL
-                     completionHandleSaS:^(id result, NSError *error) {
-                         NSLog(@"Descarga del storage completa");
-                         scoop.image = result;
-                         cell.imageView.image = result;
-                         [cell setNeedsLayout];
-                     }];
-        } else {
-            NSLog(@"Error: %@", error);
-        }
-    }];
-    
+            if (!error) {
+                
+                NSURL *imageSasURL = [NSURL URLWithString:[result objectForKey:@"sasUrl"]];
+                [self handleSaSURLToDownload:imageSasURL
+                         completionHandleSaS:^(id result, NSError *error) {
+                             scoop.image = result;
+                             scoop.imageDownloaded = YES;
+                             dispatch_async(dispatch_get_main_queue(), ^{
+                                 cell.imageView.image = result;
+                                 [cell setNeedsLayout];
+                             });
+                         }];
+            } else {
+                NSLog(@"Error: %@", error);
+            }
+        }];
+    }
     
     cell.textLabel.text = scoop.title;
     cell.detailTextLabel.text = scoop.authorName;
@@ -217,7 +181,6 @@
         }
     }];
     [downloadTask resume];
-    
 }
 
 

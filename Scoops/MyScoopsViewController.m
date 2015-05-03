@@ -107,6 +107,7 @@
                        scoop.title = item[@"title"];
                        scoop.authorName = item[@"authorName"];
                        scoop.downloaded = NO;
+                       scoop.imageURL = item[@"imageurl"];
                        scoop.status = [item[@"status"] integerValue];
                        if (scoop.status == PUBLISHED) {
                            [self.scoopsPublished addObject:scoop];
@@ -123,43 +124,6 @@
            }];
     
 }
-
-/*
-- (void)populateModelFromAzure{
-    
-    self.scoopsPublished = [[NSMutableArray alloc] init];
-    self.scoopsNotPublished = [[NSMutableArray alloc] init];
-    
-    MSClient *client = [azureSession client];
-    
-    MSTable *table = [client tableWithName:@"news"];
-    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"authorId == %@", client.currentUser.userId];
-    MSQuery *queryModel = [table queryWithPredicate: predicate];
-    [queryModel readWithCompletion:^(NSArray *items, NSInteger totalCount, NSError *error) {
-        for (id item in items) {
-            NSLog(@"item -> %@", item);
-            Scoop *scoop = [[Scoop alloc] initWithTitle:item[@"title"]
-                                                  image:nil
-                                                   text:item[@"text"]
-                                               authorId:item[@"authorId"]
-                                             authorName:item[@"authorName"]
-                                                  coors:CLLocationCoordinate2DMake(0, 0)
-                                                 status:[item[@"status"] integerValue]];
-            
-            //Si está publicada o no añadir a un array u otro.
-            if (scoop.status == PUBLISHED) {
-                [self.scoopsPublished addObject:scoop];
-            } else {
-                [self.scoopsNotPublished addObject:scoop];
-            }
-            scoop.id = item[@"id"];
-            scoop.rating = [item[@"valoracion"] integerValue];
-        }
-        [self.scoopsTableView reloadData];
-        [self.activityView stopAnimating];
-    }];
-}
-*/
 
 -(void)setAuthorName:(NSString *)authorName {
     
@@ -212,12 +176,58 @@
 
     // Configurar
     // Sincronizar modelo (scoop) --> vista (celda)
-    cell.imageView.image = scoop.image;
+    
+    if (scoop.imageDownloaded) {
+        cell.imageView.image = scoop.image;
+    } else {
+        
+        MSClient *client = [azureSession client];
+        NSDictionary *parameters = @{@"containerName" : @"scoops",
+                                     @"blobName" : [scoop.imageURL lastPathComponent]};
+        
+        [client invokeAPI:@"getsasurlforblob" body:nil HTTPMethod:@"GET" parameters:parameters headers:nil completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
+            
+            if (!error) {
+                
+                NSURL *imageSasURL = [NSURL URLWithString:[result objectForKey:@"sasUrl"]];
+                [self handleSaSURLToDownload:imageSasURL
+                         completionHandleSaS:^(id result, NSError *error) {
+                             scoop.image = result;
+                             scoop.imageDownloaded = YES;
+                             dispatch_async(dispatch_get_main_queue(), ^{
+                                 cell.imageView.image = result;
+                                 [cell setNeedsLayout];
+                             });
+                         }];
+            } else {
+                NSLog(@"Error: %@", error);
+            }
+        }];
+    }
+    
     cell.textLabel.text = scoop.title;
     cell.detailTextLabel.text = scoop.authorName;
     
     // Devolver
     return cell;
+}
+
+- (void)handleSaSURLToDownload:(NSURL *)theUrl completionHandleSaS:(void (^)(id result, NSError *error))completion{
+    
+    NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:theUrl];
+    
+    [request setHTTPMethod:@"GET"];
+    [request setValue:@"image/jpeg" forHTTPHeaderField:@"Content-Type"];
+    
+    NSURLSessionDownloadTask * downloadTask = [[NSURLSession sharedSession]downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+        
+        if (!error) {
+            
+            UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:location]];
+            completion(image, error);
+        }
+    }];
+    [downloadTask resume];
 }
 
 

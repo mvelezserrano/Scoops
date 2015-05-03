@@ -50,15 +50,7 @@
     } else {
         [self syncViewWithModel];
     }
-    
-    //[self syncViewWithModel];
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 
 - (void) downloadScoop {
     MSClient *client = [azureSession client];
@@ -111,8 +103,6 @@
     [table update:[self.model asDictionary] completion:^(NSDictionary *item, NSError *error) {
         if (error) {
             NSLog(@"Error %@", error);
-        } else {
-            NSLog(@"MODIFICACIÓN DE SCOOP A PUBLICADA OK!!");
         }
     }];
 }

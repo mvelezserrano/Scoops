@@ -55,7 +55,6 @@
 }
 
 - (void) downloadScoop {
-    NSLog(@"Entramos a downloadScoop");
     MSClient *client = [azureSession client];
     
     MSTable *table = [client tableWithName:@"news"];
@@ -77,7 +76,6 @@
 }
 
 - (IBAction)sendRating:(id)sender {
-    NSLog(@"Enviamos a Azure el nuevo rating: %d", self.rating);
     
     self.valorarButton.enabled = NO;
     
@@ -93,8 +91,7 @@
 
                if (!error) {
                    
-                   //NSLog(@"resultado --> %@", result);
-                   NSLog(@"Api ha respondido");
+                   //NSLog(@"Api ha respondido");
                }
                
                self.valorarButton.enabled = YES;
@@ -110,7 +107,6 @@
 
 
 - (void) syncViewWithModel {
-    NSLog(@"Entramos a syncViewWithModel");
     actualRatingView.canEdit = NO;
     actualRatingView.maxRating = 5;
     actualRatingView.rating = self.model.rating;

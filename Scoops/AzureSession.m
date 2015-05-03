@@ -34,7 +34,7 @@
         _client = [MSClient clientWithApplicationURL:[NSURL URLWithString:AZUREMOBILESERVICE_ENDPOINT]
                                      applicationKey:AZUREMOBILESERVICE_APPKEY];
         
-        NSLog(@"%@", _client.debugDescription);
+        //NSLog(@"%@", _client.debugDescription);
     }
     
     return self;
@@ -44,7 +44,6 @@
     
     [self loginAppInViewController:vC withCompletion:^(NSArray *results) {
         
-        NSLog(@"Resultados ---> %@", results);
     }];
 }
 
@@ -58,7 +57,6 @@
         [self.client invokeAPI:@"getuserinfofromauthprovider" body:nil HTTPMethod:@"GET" parameters:nil headers:nil completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
             
             //tenemos info extra del usuario
-            NSLog(@"%@", result);
             self.profilePicture = [NSURL URLWithString:result[@"picture"][@"data"][@"url"]];
             self.authorName = result[@"name"];
             [self notifyLoginSucceed];
@@ -76,13 +74,12 @@
                            NSLog(@"Error en el login : %@", error);
                            bloque(nil);
                        } else {
-                           NSLog(@"user -> %@", user);
+                           //NSLog(@"user -> %@", user);
                            
                            [self saveAuthInfo];
                            [self.client invokeAPI:@"getuserinfofromauthprovider" body:nil HTTPMethod:@"GET" parameters:nil headers:nil completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
                                
                                //tenemos info extra del usuario
-                               NSLog(@"%@", result);
                                self.profilePicture = [NSURL URLWithString:result[@"picture"][@"data"][@"url"]];
                                self.authorName = result[@"name"];
                                [self notifyLoginSucceed];

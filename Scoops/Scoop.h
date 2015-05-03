@@ -24,6 +24,7 @@
 @property (nonatomic) int status;
 @property (nonatomic) int rating;
 @property (nonatomic) BOOL downloaded;
+@property (nonatomic) BOOL imageDownloaded;
 
 - (id)initWithTitle:(NSString*)title
               image:(UIImage *)img

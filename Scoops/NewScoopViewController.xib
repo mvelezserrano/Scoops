@@ -6,9 +6,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NewScoopViewController">
             <connections>
+                <outlet property="activityView" destination="c7h-eZ-Czl" id="EF7-9Z-IF3"/>
                 <outlet property="scoopPhotoView" destination="uDG-uI-HIE" id="7zd-5S-Efv"/>
                 <outlet property="scoopTextView" destination="gEi-s1-akN" id="86r-HV-80X"/>
                 <outlet property="scoopTitleView" destination="8W8-GE-4sS" id="ePY-k0-Oai"/>
+                <outlet property="sendScoopButton" destination="big-nU-E6T" id="MZ4-hj-jUv"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -46,6 +48,11 @@
                     <rect key="frame" x="25" y="112" width="325" height="184"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" id="c7h-eZ-Czl">
+                    <rect key="frame" x="169" y="315" width="37" height="37"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="color" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" red="0.87675583960000003" green="0.87675583960000003" blue="0.87675583960000003" alpha="1" colorSpace="calibratedRGB"/>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
