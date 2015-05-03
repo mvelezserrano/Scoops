@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MyScoopViewController">
             <connections>
+                <outlet property="actualRatingView" destination="Mzz-Rh-d6X" id="Dcr-Ay-Ny5"/>
                 <outlet property="publishLabel" destination="le9-xx-COu" id="IWS-MC-DFa"/>
                 <outlet property="publishSwitch" destination="kZb-h4-RKx" id="SjR-Ox-GAt"/>
                 <outlet property="textView" destination="gEi-s1-akN" id="8c3-6s-IOr"/>
@@ -26,25 +27,30 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="kZb-h4-RKx">
-                    <rect key="frame" x="301" y="530" width="51" height="31"/>
+                    <rect key="frame" x="301" y="568" width="51" height="31"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <connections>
                         <action selector="publish:" destination="-1" eventType="valueChanged" id="0DM-hd-4br"/>
                     </connections>
                 </switch>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Publicar" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="le9-xx-COu">
-                    <rect key="frame" x="25" y="533" width="207" height="26"/>
+                    <rect key="frame" x="25" y="571" width="207" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="22"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" id="gEi-s1-akN">
-                    <rect key="frame" x="25" y="127" width="325" height="375"/>
+                    <rect key="frame" x="25" y="154" width="325" height="395"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
+                <view contentMode="scaleToFill" id="Mzz-Rh-d6X" customClass="ASStarRatingView">
+                    <rect key="frame" x="25" y="103" width="153" height="33"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.87675583960000003" green="0.87675583960000003" blue="0.87675583960000003" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
             </subviews>
             <color key="backgroundColor" red="0.87675583960000003" green="0.87675583960000003" blue="0.87675583960000003" alpha="1" colorSpace="calibratedRGB"/>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>

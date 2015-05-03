@@ -102,6 +102,7 @@
                                              authorName:item[@"authorName"]
                                                   coors:CLLocationCoordinate2DMake(0, 0)
                                                  status:[item[@"status"] integerValue]];
+            
             //Si está publicada o no añadir a un array u otro.
             if (scoop.status == PUBLISHED) {
                 [self.scoopsPublished addObject:scoop];
@@ -109,6 +110,7 @@
                 [self.scoopsNotPublished addObject:scoop];
             }
             scoop.id = item[@"id"];
+            scoop.rating = [item[@"valoracion"] integerValue];
         }
         [self.scoopsTableView reloadData];
         [self.activityView stopAnimating];

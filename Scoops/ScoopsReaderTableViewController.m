@@ -22,6 +22,8 @@
 
 @implementation ScoopsReaderTableViewController
 
+@synthesize activityIndicator;
+
 - (id) initWithStyle:(UITableViewStyle)style {
     
     if (self = [super initWithStyle:style]) {
@@ -41,6 +43,15 @@
     [self getHeadlines];
 }
 */
+
+-(void)loadView {
+    [super loadView];
+    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    self.activityIndicator.color = [UIColor darkGrayColor];
+    [self.view addSubview:self.activityIndicator];
+    self.activityIndicator.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2);
+    [self.activityIndicator startAnimating];
+}
 
 - (void) viewWillAppear:(BOOL)animated {
     
@@ -173,6 +184,15 @@
     ScoopViewController *sVC = [[ScoopViewController alloc] initWithScoop:scoop];
     [self.navigationController pushViewController:sVC animated:YES];
 }
+
+
+-(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if([indexPath row] == ((NSIndexPath*)[[tableView indexPathsForVisibleRows] lastObject]).row){
+        [self.activityIndicator stopAnimating];
+    }
+}
+
 
 
 @end

@@ -10,4 +10,6 @@
 
 @interface ScoopsReaderTableViewController : UITableViewController
 
+@property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
+
 @end
