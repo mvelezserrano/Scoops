@@ -17,7 +17,7 @@
 
 @property (nonatomic, copy) NSString *authorName;
 @property (nonatomic, strong) NSURL *imageSasURL;
-@property (nonatomic, strong) NSURL *imageURL;
+@property (nonatomic, strong) NSURL *imageTempURL;
 
 @end
 
@@ -60,49 +60,44 @@
 
 - (IBAction)sendScoop:(id)sender {
     
-    [self uploadAzureBlob];
-    //[self uploadScoop];
-    /*
-    // Crear el objeto Scoop (con el autor
-    MSTable *news = [client tableWithName:@"news"];
+    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+    [format setDateFormat:@"yyyyMMdd_HHmmss"];
+    NSDate *now = [NSDate date];
+    NSString *dateString = [format stringFromDate:now];
     
-    Scoop *scoop = [[Scoop alloc] initWithTitle:self.scoopTitleView.text
-                                          image:self.scoopPhotoView.image
-                                       imageURL:self.imageURL
-                                           text:self.scoopTextView.text
-                                       authorId:client.currentUser.userId
-                                     authorName:self.authorName
-                                          coors:CLLocationCoordinate2DMake(0, 0)
-                                         status:NOT_PUBLISHED];
+    NSString *imageName = @"IMG_";
+    imageName = [imageName stringByAppendingString:dateString];
+    imageName = [imageName stringByAppendingString:@".jpg"];
     
-    NSDictionary *scoopDict = [scoop asDictionaryNoId];
+    NSDictionary *parameters = @{@"containerName" : @"scoops",
+                                 @"blobName" : imageName};
     
-    [news insert:scoopDict
-      completion:^(NSDictionary *item, NSError *error) {
-          
-          if (error) {
-              NSLog(@"Error %@", error);
-          } else {
-              //NSLog(@"INSERCIÓN DE NOTICIA EN AZURE OK!!!");
-              scoop.id = item[@"id"];
-              [self.navigationController popViewControllerAnimated:YES];
-          }
-          
-      }];
-     */
+    [client invokeAPI:@"getsasurlforblob" body:nil HTTPMethod:@"GET" parameters:parameters headers:nil completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
+        
+        if (!error) {
+            
+            self.imageSasURL = [NSURL URLWithString:[result objectForKey:@"sasUrl"]];
+            self.imageTempURL = [NSURL URLWithString:[result objectForKey:@"imageUrl"]];
+            [self handleImageToUploadAzureBlob:self.imageSasURL
+                                       blobImg:self.scoopPhotoView.image
+                          completionUploadTask:^(id result, NSError *error) {
+                              
+                          }];
+            [self uploadScoop];
+        } else {
+            NSLog(@"Error: %@", error);
+        }
+    }];
 }
 
 - (void) uploadScoop {
-    //NSString *stringURL = [NSString stringWithContentsOfURL:self.imageURL
-      //                                             encoding:NSUTF8StringEncoding
-        //                                              error:nil];
-    NSLog(@"String url: %@", self.imageURL);
+    
     // Crear el objeto Scoop (con el autor
     MSTable *news = [client tableWithName:@"news"];
     
     Scoop *scoop = [[Scoop alloc] initWithTitle:self.scoopTitleView.text
                                           image:self.scoopPhotoView.image
-                                       imageURL:self.imageURL
+                                       imageURL:self.imageTempURL
                                            text:self.scoopTextView.text
                                        authorId:client.currentUser.userId
                                      authorName:self.authorName
@@ -120,48 +115,11 @@
               scoop.id = item[@"id"];
               [self.navigationController popViewControllerAnimated:YES];
           }
-          
       }];
-}
-
-- (void) uploadAzureBlob {
-    NSDateFormatter *format = [[NSDateFormatter alloc] init];
-    [format setDateFormat:@"yyyyMMdd_HHmmss"];
-    NSDate *now = [NSDate date];
-    NSString *dateString = [format stringFromDate:now];
-    
-    NSString *imageName = @"IMG_";
-    imageName = [imageName stringByAppendingString:dateString];
-    imageName = [imageName stringByAppendingString:@".jpg"];
-    
-    NSLog(@"Nombre foto: %@", imageName);
-    
-    NSDictionary *parameters = @{@"containerName" : @"scoops",
-                                 @"blobName" : imageName};
-    
-    [client invokeAPI:@"getsasurlforblob" body:nil HTTPMethod:@"GET" parameters:parameters headers:nil completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
-        
-        if (!error) {
-            
-            self.imageSasURL = [NSURL URLWithString:[result objectForKey:@"sasUrl"]];
-            self.imageURL = [NSURL URLWithString:[result objectForKey:@"imageUrl"]];
-            NSLog(@"Obtenemos imageUrl: %@", self.imageURL);
-            [self handleImageToUploadAzureBlob:self.imageSasURL
-                                       blobImg:self.scoopPhotoView.image
-                          completionUploadTask:^(id result, NSError *error) {
-                              //[self uploadScoop];
-                              NSLog(@"Completion task de handleImage...");
-                          }];
-        } else {
-            NSLog(@"Error: %@", error);
-        }
-    }];
 }
 
 
 - (void)handleImageToUploadAzureBlob:(NSURL *)theURL blobImg:(UIImage*)blobImg completionUploadTask:(void (^)(id result, NSError * error))completion{
-    
-    
     
     NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:theURL];
     
@@ -174,7 +132,6 @@
         
         if (!error) {
             NSLog(@"Tarea de subida finalizada!!!");
-            [self uploadScoop];
         }
         
     }];
@@ -263,7 +220,6 @@
 
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
-    NSLog(@"Entramos a editar el texto");
     
     if ([self.scoopTextView.text isEqualToString:@"Introduce el texto de la noticia aquí"]) {
         self.scoopTextView.text = @"";
@@ -273,7 +229,6 @@
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
-    NSLog(@"Acabamos de editar el texto");
     
     if ([self.scoopTextView.text isEqualToString:@""]) {
         self.scoopTextView.text = @"Introduce el texto de la noticia aquí";

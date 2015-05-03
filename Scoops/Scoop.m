@@ -79,9 +79,7 @@
              @"authorId"     : self.authorId,
              @"authorName" : self.authorName,
              @"coors"      : @"",
-             @"imageUrl"      : [NSString stringWithContentsOfURL:self.imageURL
-                                                         encoding:NSUTF8StringEncoding
-                                                            error:nil],
+             @"imageurl"      : [self.imageURL absoluteString],
              @"creationDate"    : self.creationDate,
              @"status"     : [NSNumber numberWithInt:self.status]};
 }
@@ -93,7 +91,7 @@
              @"authorId"     : self.authorId,
              @"authorName" : self.authorName,
              @"coors"      : @"",
-             @"imageUrl"      : @"",//[self.imageURL absoluteString],
+             @"imageurl"      : [self.imageURL absoluteString],
              @"creationDate"    : self.creationDate,
              @"status"     : [NSNumber numberWithInt:self.status]};
 }
